@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from coding_tasks.models import Solution, Task
+
+admin.site.register((Solution, Task))
