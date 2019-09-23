@@ -6,6 +6,8 @@ from coding_tasks.models import Solution, Task
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ["name", "url", "date"]
+    ordering = ["date"]
+    list_filter = ["date"]
 
 
 @admin.register(Solution)

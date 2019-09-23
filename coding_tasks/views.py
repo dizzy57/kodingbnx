@@ -1,22 +1,21 @@
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
+from django.views.generic import TemplateView, UpdateView
 
-from coding_tasks.forms import SubmitSolutionForm
 from coding_tasks.models import Solution, Task
 
 
-class SubmitView(FormView):
+class SubmitView(UpdateView):
     template_name = "submit.html"
-    form_class = SubmitSolutionForm
     success_url = reverse_lazy("solutions")
+    model = Solution
+    fields = ["url"]
 
-    def form_valid(self, form):
+    def get_object(self, queryset=None):
         task = Task.today()
-        if task:
-            Solution.objects.get_or_create(
-                task=task, user=self.request.user, defaults={"url": form.url}
-            )
-        return super().form_valid(form)
+        try:
+            return Solution.objects.get(task=task, user=self.request.user)
+        except Solution.DoesNotExist:
+            return Solution(task=task, user=self.request.user)
 
 
 class SolutionsView(TemplateView):
