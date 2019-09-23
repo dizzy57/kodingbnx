@@ -5,7 +5,7 @@ from coding_tasks.models import Solution, Task
 
 
 class SubmitView(UpdateView):
-    template_name = "submit.html"
+    template_name = "coding_tasks/submit.html"
     success_url = reverse_lazy("solutions")
     model = Solution
     fields = ["url"]
@@ -19,4 +19,4 @@ class SubmitView(UpdateView):
 
 
 class SolutionsView(TemplateView):
-    template_name = "solutions.html"
+    template_name = "coding_tasks/solutions.html"
