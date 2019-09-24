@@ -1,6 +1,6 @@
+import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
-import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -40,6 +40,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("url", models.URLField(max_length=255)),
+                ("submitted_at", models.DateTimeField(auto_now=True)),
                 (
                     "task",
                     models.ForeignKey(
@@ -55,5 +56,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
+            options={"unique_together": {("task", "user")}},
         ),
     ]
