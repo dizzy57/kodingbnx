@@ -2,17 +2,21 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group row">
-            <div class="col-sm-3 col-form-label">Task</div>
-            <div class="col-sm-9">
-                <a href="{{ solution.task.url }}">{{ solution.task.name }}</a>
+    {% if object %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group row">
+                <div class="col-sm-3 col-form-label">Task</div>
+                <div class="col-sm-9">
+                    <a href="{{ solution.task.url }}">{{ solution.task.name }}</a>
+                </div>
             </div>
-        </div>
-        {% bootstrap_form form layout="horizontal" %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        {% endbuttons %}
-    </form>
+            {% bootstrap_form form layout="horizontal" %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            {% endbuttons %}
+        </form>
+    {% else %}
+        <h3>No task for today</h3>
+    {% endif %}
 {% endblock %}
