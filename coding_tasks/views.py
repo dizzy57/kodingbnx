@@ -32,17 +32,18 @@ class SubmitView(UpdateView):
 
 class SolutionsView(TemplateView):
     template_name = "coding_tasks/solutions.html"
+    SHOW_COLUMNS = 7
 
     def get_context_data(self, **kwargs):
         context = {}
 
         today = task_schedule.today()
-        week_ago = today - timedelta(days=7)
-        all_days = [today - timedelta(days=x) for x in range(7)]
+        all_days = [today - timedelta(days=x) for x in range(self.SHOW_COLUMNS)]
+        last_date = all_days[-1]
         context["all_days"] = all_days
 
         solutions = Solution.objects.prefetch_related("user", "task").filter(
-            task__date__lte=today, task__date__gt=week_ago
+            task__date__lte=today, task__date__gte=last_date
         )
         per_user_solutions = defaultdict(dict)
         for solution in solutions:
