@@ -4,11 +4,15 @@
 #
 #    pip-compile
 #
+beautifulsoup4==4.8.0     # via django-bootstrap4
 click==7.0                # via pip-tools
+django-bootstrap4==1.0.1
+django-debug-toolbar==2.0
+django-extensions==2.2.1
 django==2.2.4
 mysqlclient==1.4.4
 pip-tools==4.0.0
 pytz==2019.2              # via django
-six==1.12.0               # via pip-tools
-sqlparse==0.3.0           # via django
-django-bootstrap4
+six==1.12.0               # via django-extensions, pip-tools
+soupsieve==1.9.3          # via beautifulsoup4
+sqlparse==0.3.0           # via django, django-debug-toolbar
