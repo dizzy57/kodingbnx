@@ -1,3 +1,6 @@
+from collections import defaultdict
+from datetime import timedelta
+
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 
@@ -29,3 +32,37 @@ class SubmitView(UpdateView):
 
 class SolutionsView(TemplateView):
     template_name = "coding_tasks/solutions.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        today = task_schedule.today()
+        week_ago = today - timedelta(days=7)
+        all_days = [today - timedelta(days=x) for x in range(7)]
+        context["all_days"] = all_days
+
+        solutions = Solution.objects.prefetch_related("user", "task").filter(
+            task__date__lte=today, task__date__gt=week_ago
+        )
+        per_user_solutions = defaultdict(dict)
+        for solution in solutions:
+            if (
+                solution.task.date == today
+                and not task_schedule.should_disclose_solutions()
+            ):
+                solution.url = None
+            per_user_solutions[solution.user][solution.task.date] = solution
+
+        current_user = self.request.user
+        table_rows = [
+            (
+                user.username,
+                user == current_user,
+                [solutions.get(day) for day in all_days],
+            )
+            for user, solutions in per_user_solutions.items()
+        ]
+        table_rows.sort(key=lambda x: x[0])
+        context["table_rows"] = table_rows
+
+        return context

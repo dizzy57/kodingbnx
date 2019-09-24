@@ -1,5 +1,32 @@
 {% extends "coding_tasks/base.html" %}
 
 {% block content %}
-Solutions view
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            {% for task_date in all_days %}
+                <th scope="col">{{ task_date|date:"D d/m" }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for name, is_current_user, solutions in table_rows %}
+            <tr{% if is_current_user %} class="table-warning"{% endif %}>
+                <th scope="row">{{ name }}</th>
+                {% for solution in solutions %}
+                    <th scope="col">
+                        {% if solution %}
+                            {% if solution.url is not None %}
+                                <a href="{{ solution.url }}" target="_blank">x</a>
+                            {% else %}
+                                x
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

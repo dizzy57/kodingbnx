@@ -13,3 +13,5 @@ class TaskAdmin(admin.ModelAdmin):
 @admin.register(Solution)
 class SolutionAdmin(admin.ModelAdmin):
     list_display = ["user", "task", "url"]
+    ordering = ["task__date"]
+    list_filter = ["task__date"]
