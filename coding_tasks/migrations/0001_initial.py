@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("url", models.URLField(max_length=255)),
+                ("url", models.URLField(max_length=255, verbose_name="URL")),
                 ("submitted_at", models.DateTimeField(auto_now=True)),
                 (
                     "task",
