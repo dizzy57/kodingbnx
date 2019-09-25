@@ -1,0 +1,10 @@
+{% extends "coding_tasks/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" %}
+        {% buttons submit="Submit" %}{% endbuttons %}
+    </form>
+{% endblock %}

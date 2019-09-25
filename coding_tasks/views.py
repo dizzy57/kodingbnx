@@ -1,6 +1,8 @@
 from collections import defaultdict
 from datetime import timedelta
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 
@@ -8,7 +10,7 @@ from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
 
 
-class SubmitView(UpdateView):
+class SubmitView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/submit.html"
     success_url = reverse_lazy("solutions")
     model = Solution
@@ -30,7 +32,7 @@ class SubmitView(UpdateView):
             return Solution(task=task, user=self.request.user)
 
 
-class SolutionsView(TemplateView):
+class SolutionsView(LoginRequiredMixin, TemplateView):
     template_name = "coding_tasks/solutions.html"
     SHOW_COLUMNS = 7
 
@@ -57,7 +59,7 @@ class SolutionsView(TemplateView):
         current_user = self.request.user
         table_rows = [
             (
-                user.username,
+                user.get_short_name(),
                 user == current_user,
                 [solutions.get(day) for day in all_days],
             )
@@ -67,3 +69,13 @@ class SolutionsView(TemplateView):
         context["table_rows"] = table_rows
 
         return context
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "coding_tasks/user.html"
+    success_url = reverse_lazy("user")
+    model = User
+    fields = ["first_name", "email"]
+
+    def get_object(self, queryset=None):
+        return self.request.user

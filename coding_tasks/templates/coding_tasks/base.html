@@ -20,6 +20,10 @@
             <a class="nav-link{% if request.resolver_match.url_name == "solutions" %} active{% endif %}"
                href="{% url "solutions" %}">Solutions</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
+               href="{% url "user" %}">User</a>
+        </li>
     </ul>
     {% block content %}{% endblock %}
 </div>
