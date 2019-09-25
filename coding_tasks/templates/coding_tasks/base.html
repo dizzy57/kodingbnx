@@ -11,20 +11,22 @@
 </head>
 <body>
 <div class="container">
-    <ul class="nav nav-tabs mb-4">
-        <li class="nav-item">
-            <a class="nav-link{% if request.resolver_match.url_name == "submit" %} active{% endif %}"
-               href="{% url "submit" %}">Submit</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link{% if request.resolver_match.url_name == "solutions" %} active{% endif %}"
-               href="{% url "solutions" %}">Solutions</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
-               href="{% url "user" %}">User</a>
-        </li>
-    </ul>
+    {% block menu %}
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link{% if request.resolver_match.url_name == "submit" %} active{% endif %}"
+                   href="{% url "submit" %}">Submit</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{% if request.resolver_match.url_name == "solutions" %} active{% endif %}"
+                   href="{% url "solutions" %}">Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
+                   href="{% url "user" %}">User</a>
+            </li>
+        </ul>
+    {% endblock %}
     {% block content %}{% endblock %}
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"

@@ -1,0 +1,16 @@
+{% extends "coding_tasks/base.html" %}
+{% load bootstrap4 %}
+
+{% block menu %}
+{% endblock %}
+{% block content %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-4">
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout="horizontal" %}
+                {% buttons submit="Submit" %}{% endbuttons %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
