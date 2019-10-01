@@ -4,3 +4,4 @@ mysqlclient
 django-bootstrap4
 django-debug-toolbar
 django-extensions
+requests

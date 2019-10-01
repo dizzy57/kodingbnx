@@ -17,7 +17,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-urlpatterns = [path("admin/", admin.site.urls), path("", include("coding_tasks.urls"))]
+urlpatterns = [
+    path("", include("coding_tasks.urls")),
+    path("admin/", admin.site.urls),
+    path("bot_api/", include("telegram_bot.urls")),
+]
 
 if settings.DEBUG:
     import debug_toolbar
