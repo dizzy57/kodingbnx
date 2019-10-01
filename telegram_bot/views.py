@@ -1,5 +1,5 @@
+import functools
 import os
-from functools import wraps
 
 from django.http import HttpResponse
 
@@ -11,7 +11,7 @@ CRON_API_KEY = os.environ["CRON_API_KEY"]
 
 
 def check_api_key(f):
-    @wraps(f)
+    @functools.wraps(f)
     def wrapped(request):
         key = request.GET.get("api_key")
         if key != CRON_API_KEY:
@@ -47,7 +47,10 @@ def evening_send_solutions():
     )
 
     text = f"Solutions {today:%d/%m}:\n"
-    text += "\n".join(
-        f"{solution.user.first_name} {solution.url}" for solution in solutions
-    )
+    if solutions:
+        text += "\n".join(
+            f"{solution.user.first_name} {solution.url}" for solution in solutions
+        )
+    else:
+        text += "None"
     send_message(text)
