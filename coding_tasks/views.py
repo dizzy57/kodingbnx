@@ -2,7 +2,7 @@ from collections import defaultdict
 from datetime import timedelta
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
@@ -86,3 +86,8 @@ class SignUpView(CreateView):
     template_name = "coding_tasks/sign_up.html"
     success_url = reverse_lazy("login")
     form_class = UserCreationForm
+
+
+class EditTasksView(PermissionRequiredMixin, TemplateView):
+    permission_required = "coding_tasks.edit_tasks"
+    template_name = "coding_tasks/edit_tasks.html"

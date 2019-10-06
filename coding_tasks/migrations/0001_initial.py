@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
                 ("url", models.URLField(max_length=255)),
                 ("date", models.DateField(unique=True)),
             ],
+            options={"permissions": [("edit_tasks", "Can edit task list")]},
         ),
         migrations.CreateModel(
             name="Solution",

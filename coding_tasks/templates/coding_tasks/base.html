@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" href="{% static "coding_tasks/knuth.jpeg" %}">
-    <title>{% block title %}kodingbnx{% endblock %}</title>
+    <title>kodingbnx</title>
 </head>
 <body>
 <div class="container">
@@ -25,6 +25,12 @@
                 <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
                    href="{% url "user" %}">User</a>
             </li>
+            {% if perms.coding_tasks.edit_tasks %}
+                <li class="nav-item">
+                    <a class="nav-link{% if request.resolver_match.url_name == "edit_tasks" %} active{% endif %}"
+                       href="{% url "edit_tasks" %}">Edit tasks</a>
+                </li>
+            {% endif %}
         </ul>
     {% endblock %}
     {% block content %}{% endblock %}
