@@ -75,7 +75,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/user.html"
     success_url = reverse_lazy("user")
     model = User
-    fields = ["first_name", "email"]
+    fields = ["first_name"]
 
     def get_object(self, queryset=None):
         return self.request.user

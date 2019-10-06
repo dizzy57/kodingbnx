@@ -5,8 +5,8 @@
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form layout="horizontal" %}
-        {% buttons submit="Submit" %}
-            <a class="btn btn-primary" href="{% url "logout" %}" role="button">Logout</a>
-        {% endbuttons %}
+        {% buttons submit="Change name" %} {% endbuttons %}
     </form>
+    <a class="btn btn-secondary" href="{% url "password_change" %}" role="button">Change password</a>
+    <a class="btn btn-secondary" href="{% url "logout" %}" role="button">Logout</a>
 {% endblock %}
