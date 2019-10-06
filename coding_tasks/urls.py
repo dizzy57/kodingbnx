@@ -1,7 +1,7 @@
 import django.contrib.auth.views as auth_views
 from django.urls import path
 
-from coding_tasks.views import SolutionsView, SubmitView, UserUpdateView
+from coding_tasks.views import SignUpView, SolutionsView, SubmitView, UserUpdateView
 
 urlpatterns = [
     path("", SubmitView.as_view(), name="submit"),
@@ -20,4 +20,5 @@ urlpatterns = [
         ),
         name="password_change",
     ),
+    path("sign_up", SignUpView.as_view(), name="sign_up"),
 ]

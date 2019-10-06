@@ -1,10 +1,11 @@
 from collections import defaultdict
 from datetime import timedelta
 
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
@@ -79,3 +80,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class SignUpView(CreateView):
+    template_name = "coding_tasks/sign_up.html"
+    success_url = reverse_lazy("login")
+    form_class = UserCreationForm

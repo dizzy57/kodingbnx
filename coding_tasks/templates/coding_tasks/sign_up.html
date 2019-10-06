@@ -9,9 +9,7 @@
             <form method="post">
                 {% csrf_token %}
                 {% bootstrap_form form layout="horizontal" %}
-                {% buttons submit="Log in" %}
-                    <a class="btn btn-primary" href="{% url "sign_up" %}" role="button">Sign up</a>
-                {% endbuttons %}
+                {% buttons submit="Sign up" %}{% endbuttons %}
             </form>
         </div>
     </div>
