@@ -2,8 +2,21 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <div id="app">
-        [[ message ]]
+    <div class="col-6">
+        <div id="app">
+            <draggable
+                    :list="list"
+                    class="list-group"
+            >
+                <div
+                        class="list-group-item"
+                        v-for="element in list"
+                        :key="element.id"
+                >
+                    [[ element.name ]]
+                </div>
+            </draggable>
+        </div>
     </div>
 {% endblock %}
 {% block additional_js %}
@@ -11,12 +24,29 @@
             integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
     {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"#}
     {#            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY=" crossorigin="anonymous"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js"
+            integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"
+            integrity="sha256-GAVdfR/7cRNqncNsUBZSbgGaHPgQ5yhi9FMjm+3AJTw=" crossorigin="anonymous"></script>
     <script>
         const app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
-                message: 'Hello Vue!'
+                list: [
+                    {
+                        "name": "Alice",
+                        "id": 0
+                    },
+                    {
+                        "name": "Bob",
+                        "id": 1
+                    },
+                    {
+                        "name": "Charlie",
+                        "id": 2
+                    }
+                ]
             }
         })
     </script>
