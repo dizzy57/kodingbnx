@@ -2,5 +2,22 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    Edit tasks
+    <div id="app">
+        [[ message ]]
+    </div>
+{% endblock %}
+{% block additional_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"
+            integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"#}
+    {#            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY=" crossorigin="anonymous"></script>#}
+    <script>
+        const app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
 {% endblock %}
