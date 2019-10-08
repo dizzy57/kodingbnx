@@ -2,21 +2,32 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <div class="col-6">
-        <div id="app">
-            <draggable
-                    :list="list"
-                    class="list-group"
+    <div id="app">
+        <draggable
+                :list="tasks"
+                tag="ul"
+                class="list-group"
+                ghost-class="list-group-item-secondary"
+                handle=".handle"
+        >
+            <li
+                    class="list-group-item"
+                    v-for="(task, idx) in tasks"
+                    :key="task.id"
             >
-                <div
-                        class="list-group-item"
-                        v-for="element in list"
-                        :key="element.id"
-                >
-                    [[ element.name ]]
+                <div class="form-row">
+                    <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
+                         :class="{'text-danger': dates[idx].weekday > 5}">
+                        [[ dates[idx].toFormat('dd/MM') ]]
+                    </div>
+                    <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
+                    <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
+                    <button type="button" class="close col-sm-1" @click="remove_at(idx)">&times;</button>
                 </div>
-            </draggable>
-        </div>
+            </li>
+        </draggable>
+        <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
+        <button type="button" class="btn btn-primary">Save</button>
     </div>
 {% endblock %}
 {% block additional_js %}
@@ -28,26 +39,51 @@
             integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"
             integrity="sha256-GAVdfR/7cRNqncNsUBZSbgGaHPgQ5yhi9FMjm+3AJTw=" crossorigin="anonymous"></script>
+    <script src="http://moment.github.io/luxon/global/luxon.min.js"></script>
     <script>
         const app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
-                list: [
+                start_date: "2019-10-11",
+                next_id: 3,
+                tasks: [
                     {
+                        "id": 0,
                         "name": "Alice",
-                        "id": 0
+                        "url": "http://alice.url"
                     },
                     {
+                        "id": 1,
                         "name": "Bob",
-                        "id": 1
+                        "url": "http://bob.url"
                     },
                     {
+                        "id": 2,
                         "name": "Charlie",
-                        "id": 2
+                        "url": "http://charlie.url"
                     }
                 ]
+            },
+            computed: {
+                dates() {
+                    const first_day = luxon.DateTime.fromISO(this.start_date);
+                    let res = [];
+                    for (let i = 0; i < this.tasks.length; i++) {
+                        res.push(first_day.plus({days: i}));
+                    }
+                    return res;
+                }
+            },
+            methods: {
+                remove_at(idx) {
+                    this.tasks.splice(idx, 1);
+                },
+                add_row() {
+                    this.tasks.push({id: this.next_id, name: '', url: ''});
+                    this.next_id = this.next_id + 1;
+                }
             }
-        })
+        });
     </script>
 {% endblock %}
