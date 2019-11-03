@@ -1,14 +1,20 @@
+import json
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
+from django.db import transaction
+from django.http import JsonResponse
+from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 
 from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
+
+DATE_FORMAT = "%Y-%m-%d"
 
 
 class SubmitView(LoginRequiredMixin, UpdateView):
@@ -91,3 +97,33 @@ class SignUpView(CreateView):
 class EditTasksView(PermissionRequiredMixin, TemplateView):
     permission_required = "coding_tasks.edit_tasks"
     template_name = "coding_tasks/edit_tasks.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        today = task_schedule.today()
+        context["today"] = today.strftime(DATE_FORMAT)
+
+        tasks = [
+            {"id": idx, "name": task.name, "url": task.url}
+            for idx, task in enumerate(
+                Task.objects.filter(date__gte=today).order_by("date")
+            )
+        ]
+        context["total_tasks"] = len(tasks)
+        context["tasks"] = json.dumps(tasks)
+        context["csrf_token"] = get_csrf_token(self.request)
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        with transaction.atomic():
+            date = datetime.strptime(data["start_date"], DATE_FORMAT).date()
+            for task in data["tasks"]:
+                Task.objects.update_or_create(
+                    date=date, defaults={"name": task["name"], "url": task["url"]}
+                )
+                date += timedelta(days=1)
+            Task.objects.filter(date__gte=date).delete()
+        return JsonResponse({"ok": True})

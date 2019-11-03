@@ -27,7 +27,7 @@
             </li>
         </draggable>
         <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
     </div>
 {% endblock %}
 {% block additional_js %}
@@ -45,25 +45,9 @@
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
-                start_date: "2019-10-11",
-                next_id: 3,
-                tasks: [
-                    {
-                        "id": 0,
-                        "name": "Alice",
-                        "url": "http://alice.url"
-                    },
-                    {
-                        "id": 1,
-                        "name": "Bob",
-                        "url": "http://bob.url"
-                    },
-                    {
-                        "id": 2,
-                        "name": "Charlie",
-                        "url": "http://charlie.url"
-                    }
-                ]
+                start_date: '{{ today }}',
+                next_id: {{ total_tasks }},
+                tasks: {{ tasks|safe }}
             },
             computed: {
                 dates() {
@@ -82,6 +66,22 @@
                 add_row() {
                     this.tasks.push({id: this.next_id, name: '', url: ''});
                     this.next_id = this.next_id + 1;
+                },
+                async save_tasks() {
+                    const data = {
+                        start_date: this.start_date,
+                        tasks: this.tasks
+                    };
+                    const response = await fetch('', {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        },
+                    });
+                    const res = await response.json();
+                    alert(JSON.stringify(res));
                 }
             }
         });
