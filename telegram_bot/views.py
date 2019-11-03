@@ -31,7 +31,7 @@ def morning_send_task():
         send_message("No task for today :(")
         return
 
-    submit_url = "https://kodingbnx.bnx/"
+    submit_url = "https://kodingbnx.pythonanywhere.com/"
 
     m = send_message("\n".join((task.name, task.url, submit_url)))
     pin_message(m["result"]["message_id"])
