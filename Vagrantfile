@@ -18,4 +18,6 @@ Vagrant.configure("2") do |config|
     sudo -E apt-get -y install git build-essential python3-dev python3-pip python3-venv mysql-server libmysqlclient-dev
   SHELL
 
+  config.vm.synced_folder ".", "/home/vagrant/kodingbnx", type: "rsync", rsync__exclude: ".git/"
+
 end
