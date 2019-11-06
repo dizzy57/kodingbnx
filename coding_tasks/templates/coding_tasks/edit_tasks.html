@@ -7,13 +7,14 @@
                 :list="tasks"
                 tag="ul"
                 class="list-group"
-                ghost-class="list-group-item-secondary"
+                ghost-class="list-group-item-dark"
                 handle=".handle"
         >
             <li
                     class="list-group-item"
                     v-for="(task, idx) in tasks"
                     :key="task.id"
+                    :class="{'list-group-item-secondary': !is_valid_task(idx)}"
             >
                 <div class="form-row">
                     <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
@@ -22,7 +23,7 @@
                     </div>
                     <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
                     <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
-                    <button type="button" class="close col-sm-1" @click="remove_at(idx)">&times;</button>
+                    <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
                 </div>
             </li>
         </draggable>
@@ -46,8 +47,8 @@
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
-                start_date: '{{ today }}',
-                next_id: {{ total_tasks }},
+                start_date: '{{ start_date }}',
+                next_id: {{ next_id }},
                 tasks: {{ tasks|safe }}
             },
             computed: {
@@ -61,8 +62,17 @@
                 }
             },
             methods: {
-                remove_at(idx) {
-                    this.tasks.splice(idx, 1);
+                is_valid_task(idx) {
+                    const task = this.tasks[idx];
+                    return task.name.length !== 0 && task.url.length !== 0;
+                },
+                clean_or_remove_at(idx) {
+                    if (this.is_valid_task(idx)) {
+                        this.tasks[idx]['name'] = '';
+                        this.tasks[idx]['url'] = '';
+                    } else {
+                        this.tasks.splice(idx, 1);
+                    }
                 },
                 add_row() {
                     this.tasks.push({id: this.next_id, name: '', url: ''});
@@ -81,8 +91,12 @@
                             'Content-Type': 'application/json'
                         },
                     });
-                    const res = await response.json();
-                    alert(JSON.stringify(res));
+                    if (response.status === 200) {
+                        alert('Saved');
+                    } else {
+                        alert('Backend error, please reload this page.\n' +
+                            'Or open it in another window, I\'m an alert, not a cop');
+                    }
                 }
             }
         });

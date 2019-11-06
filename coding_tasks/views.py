@@ -1,12 +1,14 @@
+import datetime
+import itertools
 import json
 from collections import defaultdict
-from datetime import datetime, timedelta
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import JsonResponse
+from django.db.models import Q
+from django.http import HttpResponse
 from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
@@ -47,7 +49,9 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
         context = {}
 
         today = task_schedule.today()
-        all_days = [today - timedelta(days=x) for x in range(self.SHOW_COLUMNS)]
+        all_days = [
+            today - datetime.timedelta(days=x) for x in range(self.SHOW_COLUMNS)
+        ]
         last_date = all_days[-1]
         context["all_days"] = all_days
 
@@ -101,16 +105,27 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = {}
 
-        today = task_schedule.today()
-        context["today"] = today.strftime(DATE_FORMAT)
+        start_date = task_schedule.today()
+        context["start_date"] = start_date.strftime(DATE_FORMAT)
 
+        tasks_by_date = {
+            task.date: {"name": task.name, "url": task.url}
+            for task in (Task.objects.filter(date__gte=start_date))
+        }
+
+        max_date = max(tasks_by_date.keys(), default=datetime.date.min)
+        dates = itertools.takewhile(
+            lambda x: x <= max_date,
+            (start_date + datetime.timedelta(days=n) for n in itertools.count()),
+        )
+
+        empty_task = {"name": "", "url": ""}
         tasks = [
-            {"id": idx, "name": task.name, "url": task.url}
-            for idx, task in enumerate(
-                Task.objects.filter(date__gte=today).order_by("date")
-            )
+            {"id": idx, **tasks_by_date.get(date, empty_task)}
+            for idx, date in enumerate(dates)
         ]
-        context["total_tasks"] = len(tasks)
+        context["next_id"] = len(tasks)
+
         context["tasks"] = json.dumps(tasks)
         context["csrf_token"] = get_csrf_token(self.request)
 
@@ -119,11 +134,15 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         with transaction.atomic():
-            date = datetime.strptime(data["start_date"], DATE_FORMAT).date()
+            date = datetime.datetime.strptime(data["start_date"], DATE_FORMAT).date()
+            delete_dates = []
             for task in data["tasks"]:
-                Task.objects.update_or_create(
-                    date=date, defaults={"name": task["name"], "url": task["url"]}
-                )
-                date += timedelta(days=1)
-            Task.objects.filter(date__gte=date).delete()
-        return JsonResponse({"ok": True})
+                if task["name"] and task["url"]:
+                    Task.objects.update_or_create(
+                        date=date, defaults={"name": task["name"], "url": task["url"]}
+                    )
+                else:
+                    delete_dates.append(date)
+                date += datetime.timedelta(days=1)
+            Task.objects.filter(Q(date__in=delete_dates) | Q(date__gte=date)).delete()
+        return HttpResponse()
