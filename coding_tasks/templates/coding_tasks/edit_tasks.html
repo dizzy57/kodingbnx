@@ -32,10 +32,13 @@
     </div>
 {% endblock %}
 {% block additional_js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"
-            integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
-    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"#}
-    {#            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY=" crossorigin="anonymous"></script>#}
+    {% if debug %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"
+                integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
+    {% else %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+                integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY=" crossorigin="anonymous"></script>
+    {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js"
             integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"

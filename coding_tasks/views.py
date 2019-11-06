@@ -3,6 +3,7 @@ import itertools
 import json
 from collections import defaultdict
 
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
@@ -128,6 +129,7 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
 
         context["tasks"] = json.dumps(tasks)
         context["csrf_token"] = get_csrf_token(self.request)
+        context["debug"] = settings.DEBUG
 
         return context
 
