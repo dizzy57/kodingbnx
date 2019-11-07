@@ -3,7 +3,7 @@ import datetime
 import pytz
 
 TZ = pytz.timezone("Europe/Amsterdam")
-NEW_TASK_TIME = datetime.time(hour=6, minute=59)
+NEW_TASK_TIME = datetime.time(hour=6)
 SOLUTIONS_TIME = datetime.time(hour=17)
 
 
