@@ -27,8 +27,16 @@
                 </div>
             </li>
         </draggable>
-        <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
-        <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
+        <div class="row">
+            <div class="col-auto mr-auto">
+                <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
+                <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" @click="resend_notification()">Resend notification
+                </button>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block additional_js %}
@@ -99,6 +107,21 @@
                     } else {
                         alert('Backend error, please reload this page.\n' +
                             'Or open it in another window, I\'m an alert, not a cop');
+                    }
+                },
+                async resend_notification() {
+                    if (confirm("Do you really want to resend notification?")) {
+                        const response = await fetch('{% url "resend_notification" %}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                        });
+                        if (response.status === 200) {
+                            alert('Notification sent');
+                        } else {
+                            alert('Error while sending notification')
+                        }
                     }
                 }
             }

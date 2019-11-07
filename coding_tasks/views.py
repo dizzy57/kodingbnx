@@ -12,10 +12,11 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, View
 
 from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
+from telegram_bot.telegram_api import TelegramBot
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -147,4 +148,13 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
                     delete_dates.append(date)
                 date += datetime.timedelta(days=1)
             Task.objects.filter(Q(date__in=delete_dates) | Q(date__gte=date)).delete()
+        return HttpResponse()
+
+
+class ResendNotificationView(PermissionRequiredMixin, View):
+    permission_required = "coding_tasks.edit_tasks"
+
+    def post(self, request, *args, **kwargs):
+        with TelegramBot() as bot:
+            bot.send_and_pin_task_for_today()
         return HttpResponse()
