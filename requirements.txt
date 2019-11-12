@@ -4,15 +4,15 @@
 #
 #    pip-compile
 #
-beautifulsoup4==4.8.0     # via django-bootstrap4
+beautifulsoup4==4.8.1     # via django-bootstrap4
 certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
 django-bootstrap4==1.0.1
-django==2.2.4
+django==2.2.7
 idna==2.8                 # via requests
-mysqlclient==1.4.4
-pytz==2019.2              # via django
+mysqlclient==1.4.5
+pytz==2019.3              # via django
 requests==2.22.0
-soupsieve==1.9.3          # via beautifulsoup4
+soupsieve==1.9.5          # via beautifulsoup4
 sqlparse==0.3.0           # via django
-urllib3==1.25.6           # via requests
+urllib3==1.25.7           # via requests
