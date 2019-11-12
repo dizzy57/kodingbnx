@@ -6,8 +6,8 @@
             <thead>
             <tr>
                 <th scope="col"></th>
-                {% for task_date in all_days %}
-                    <th scope="col">{{ task_date|date:"D d/m" }}</th>
+                {% for task in all_tasks %}
+                    <th scope="col" title="{{ task.name }}">{{ task.date|date:"D d/m" }}</th>
                 {% endfor %}
             </tr>
             </thead>

@@ -55,19 +55,26 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
             today - datetime.timedelta(days=x) for x in range(self.SHOW_COLUMNS)
         ]
         last_date = all_days[-1]
-        context["all_days"] = all_days
+
+        task_by_date = {
+            task.date: task for task in Task.objects.filter(date__in=all_days)
+        }
+        all_tasks = [
+            task_by_date.get(date, Task(date=date, name="")) for date in all_days
+        ]
+        context["all_tasks"] = all_tasks
 
         solutions = Solution.objects.prefetch_related("user", "task").filter(
             task__date__lte=today, task__date__gte=last_date
         )
-        per_user_solutions = defaultdict(dict)
+        solutions_by_user = defaultdict(dict)
         for solution in solutions:
             if (
                 solution.task.date == today
                 and not task_schedule.should_disclose_solutions()
             ):
                 solution.url = None
-            per_user_solutions[solution.user][solution.task.date] = solution
+            solutions_by_user[solution.user][solution.task.date] = solution
 
         current_user = self.request.user
         table_rows = [
@@ -76,7 +83,7 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
                 user == current_user,
                 [solutions.get(day) for day in all_days],
             )
-            for user, solutions in per_user_solutions.items()
+            for user, solutions in solutions_by_user.items()
         ]
         table_rows.sort(key=lambda x: x[0])
         context["table_rows"] = table_rows
