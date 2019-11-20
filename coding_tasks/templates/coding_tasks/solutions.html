@@ -30,5 +30,8 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if slackers %}
+            <div>Slackers: {{ slackers|join:", " }}</div>
+        {% endif %}
     </div>
 {% endblock %}

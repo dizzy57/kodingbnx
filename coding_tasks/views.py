@@ -96,6 +96,15 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
         table_rows.sort(key=lambda x: x[0])
         context["table_rows"] = table_rows
 
+        users_with_solutions_ids = {user.id for user in solutions_by_user.keys()}
+        users_without_solutions = User.objects.filter(is_active=True).exclude(
+            id__in=users_with_solutions_ids
+        )
+        slackers = [
+            user.get_short_name() or user.username for user in users_without_solutions
+        ]
+        context["slackers"] = slackers
+
         return context
 
 
