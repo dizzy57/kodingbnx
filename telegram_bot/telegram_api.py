@@ -72,7 +72,7 @@ class TelegramBot:
         text = f"Solutions {self.today:%d/%m}:\n"
         if solutions:
             text += "\n".join(
-                f"{solution.user.first_name} {solution.url}" for solution in solutions
+                f"{solution.user.first_name}: {solution.url}" for solution in solutions
             )
         else:
             text += "None"
@@ -87,3 +87,7 @@ class TelegramBot:
     def notify_if_first_day_of_month(self):
         if self.today.day == 1:
             self.api.send_message(FIRST_DAY_OF_MONTH_MESSAGE)
+
+    def notify_additional_solution(self, solution: Solution):
+        text = f"New solution by {solution.user.first_name}: {solution.url}"
+        self.api.send_message(text)

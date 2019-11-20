@@ -42,6 +42,14 @@ class SubmitView(LoginRequiredMixin, UpdateView):
         except Solution.DoesNotExist:
             return Solution(task=task, user=self.request.user)
 
+    def form_valid(self, form):
+        res = super().form_valid(form)
+        if task_schedule.can_disclose_solutions():
+            # We've got an additional solution after the deadline
+            with TelegramBot() as bot:
+                bot.notify_additional_solution(self.object)
+        return res
+
 
 class SolutionsView(LoginRequiredMixin, TemplateView):
     template_name = "coding_tasks/solutions.html"
@@ -71,7 +79,7 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
         for solution in solutions:
             if (
                 solution.task.date == today
-                and not task_schedule.should_disclose_solutions()
+                and not task_schedule.can_disclose_solutions()
             ):
                 solution.url = None
             solutions_by_user[solution.user][solution.task.date] = solution

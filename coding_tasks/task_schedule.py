@@ -16,7 +16,7 @@ def today(now=None):
         return now.date() - datetime.timedelta(days=1)
 
 
-def should_disclose_solutions(now=None):
+def can_disclose_solutions(now=None):
     if now is None:
         now = datetime.datetime.now(TZ)
     return not (NEW_TASK_TIME < now.time() < SOLUTIONS_TIME)
