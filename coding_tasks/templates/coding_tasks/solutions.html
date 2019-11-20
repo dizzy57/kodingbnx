@@ -16,7 +16,7 @@
                 <tr{% if is_current_user %} class="table-warning"{% endif %}>
                     <th scope="row">{{ name }}</th>
                     {% for solution in solutions %}
-                        <th scope="col">
+                        <td>
                             {% if solution %}
                                 {% if solution.url is not None %}
                                     <a href="{{ solution.url }}" target="_blank">x</a>
@@ -24,14 +24,17 @@
                                     x
                                 {% endif %}
                             {% endif %}
-                        </th>
+                        </td>
                     {% endfor %}
+                </tr>
+            {% endfor %}
+            {% for name, last_solution in slackers %}
+                <tr class="table-danger">
+                    <th scope="row">{{ name }}</th>
+                    <td colspan="2">{{ last_solution|timesince|default:"Never" }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        {% if slackers %}
-            <div>Slackers: {{ slackers|join:", " }}</div>
-        {% endif %}
     </div>
 {% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Max, Q
 from django.http import HttpResponse
 from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
@@ -96,12 +96,15 @@ class SolutionsView(LoginRequiredMixin, TemplateView):
         table_rows.sort(key=lambda x: x[0])
         context["table_rows"] = table_rows
 
-        users_with_solutions_ids = {user.id for user in solutions_by_user.keys()}
-        users_without_solutions = User.objects.filter(is_active=True).exclude(
-            id__in=users_with_solutions_ids
+        users_without_recent_solutions = (
+            User.objects.filter(is_active=True)
+            .annotate(last_solution=Max("solution__task__date"))
+            .filter(Q(last_solution__lt=last_date) | Q(last_solution=None))
+            .order_by("last_solution")
         )
         slackers = [
-            user.get_short_name() or user.username for user in users_without_solutions
+            (user.get_short_name() or user.username, user.last_solution)
+            for user in users_without_recent_solutions
         ]
         context["slackers"] = slackers
 
