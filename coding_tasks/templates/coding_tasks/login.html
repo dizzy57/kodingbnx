@@ -10,7 +10,9 @@
                 {% csrf_token %}
                 {% bootstrap_form form layout="horizontal" %}
                 {% buttons submit="Log in" %}
-                    <a class="btn btn-primary" href="{% url "sign_up" %}" role="button">Sign up</a>
+                    {% if enable_sign_up %}
+                        <a class="btn btn-primary" href="{% url "sign_up" %}" role="button">Sign up</a>
+                    {% endif %}
                 {% endbuttons %}
             </form>
         </div>
