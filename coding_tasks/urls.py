@@ -4,15 +4,9 @@ import django.contrib.auth.views as auth_views
 from django.urls import path, register_converter
 
 from coding_tasks.converters import DateConverter
-from coding_tasks.views import (
-    EditTasksView,
-    ResendNotificationView,
-    SignUpView,
-    SolutionsDayView,
-    SolutionsWeekView,
-    SubmitView,
-    UserUpdateView,
-)
+from coding_tasks.views.editor import EditTasksView, ResendNotificationView
+from coding_tasks.views.solutions import SolutionsDayView, SolutionsWeekView, SubmitView
+from coding_tasks.views.users import SignUpView, UserUpdateView
 
 ENABLE_SIGN_UP = os.environ["ENABLE_SIGN_UP"] == "1"
 
@@ -22,8 +16,8 @@ urlpatterns = [
     path("", SubmitView.as_view(), name="submit"),
     path("solutions", SolutionsWeekView.as_view(), name="solutions_week"),
     path("solutions/<date:date>", SolutionsDayView.as_view(), name="solutions_day"),
+    # region User and auth
     path("user", UserUpdateView.as_view(), name="user"),
-    # region Auth
     path(
         "login",
         auth_views.LoginView.as_view(
@@ -41,7 +35,7 @@ urlpatterns = [
         name="password_change",
     ),
     # endregion
-    # region Task admin
+    # region Task editor
     path("edit_tasks", EditTasksView.as_view(), name="edit_tasks"),
     path(
         "resend_notification",
