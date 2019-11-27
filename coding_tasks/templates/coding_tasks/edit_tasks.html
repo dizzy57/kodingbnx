@@ -2,42 +2,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <div id="app">
-        <draggable
-                :list="tasks"
-                tag="ul"
-                class="list-group"
-                ghost-class="list-group-item-dark"
-                handle=".handle"
-        >
-            <li
-                    class="list-group-item"
-                    v-for="(task, idx) in tasks"
-                    :key="task.id"
-                    :class="{'list-group-item-secondary': !is_valid_task(idx)}"
-            >
-                <div class="form-row">
-                    <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
-                         :class="{'text-danger': dates[idx].weekday > 5}">
-                        [[ dates[idx].toFormat('dd/MM') ]]
-                    </div>
-                    <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
-                    <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
-                    <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
-                </div>
-            </li>
-        </draggable>
-        <div class="row">
-            <div class="col-auto mr-auto">
-                <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
-                <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
-            </div>
-            <div class="col-auto">
-                <button type="button" class="btn btn-primary" @click="resend_notification()">Resend notification
-                </button>
-            </div>
-        </div>
-    </div>
+    <div id="app"></div>
 {% endblock %}
 {% block additional_js %}
     {% if debug %}
@@ -54,10 +19,50 @@
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.21.1/build/global/luxon.min.js"
             integrity="sha256-lOA2IFesJNmVvGlrjjCP0fdBZR0XlSRyUBCs6yuVdhs=" crossorigin="anonymous"></script>
     {{ editor_data|json_script:"editor-data" }}
+    <script type="text/x-template" id="editor-template">
+        <div id="app">
+            <draggable
+                    :list="tasks"
+                    tag="ul"
+                    class="list-group"
+                    ghost-class="list-group-item-dark"
+                    handle=".handle"
+            >
+                <li
+                        class="list-group-item"
+                        v-for="(task, idx) in tasks"
+                        :key="task.id"
+                        :class="{'list-group-item-secondary': !is_valid_task(idx)}"
+                >
+                    <div class="form-row">
+                        <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
+                             :class="{'text-danger': dates[idx].weekday > 5}">
+                            [[ dates[idx].toFormat('dd/MM') ]]
+                        </div>
+                        <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
+                        <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
+                        <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
+                    </div>
+                </li>
+            </draggable>
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
+                    <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary" @click="resend_notification()">Resend notification
+                    </button>
+                </div>
+            </div>
+        </div>
+    </script>
     <script>
+        "use strict";
         const app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
+            template: '#editor-template',
             data: JSON.parse(document.getElementById('editor-data').textContent),
             computed: {
                 dates() {
