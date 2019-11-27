@@ -24,9 +24,10 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        editor_data = {}
 
         start_date = task_schedule.today()
-        context["start_date"] = start_date.strftime(DATE_FORMAT)
+        editor_data["start_date"] = start_date.strftime(DATE_FORMAT)
 
         tasks_by_date = {
             task.date: {"name": task.name, "url": task.url}
@@ -44,10 +45,12 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
             {"id": idx, **tasks_by_date.get(date, empty_task)}
             for idx, date in enumerate(dates)
         ]
-        context["next_id"] = len(tasks)
+        editor_data["next_id"] = len(tasks)
 
-        context["tasks"] = json.dumps(tasks)
-        context["csrf_token"] = get_csrf_token(self.request)
+        editor_data["tasks"] = tasks
+        editor_data["csrf_token"] = get_csrf_token(self.request)
+
+        context["editor_data"] = editor_data
         context["debug"] = settings.DEBUG
 
         return context

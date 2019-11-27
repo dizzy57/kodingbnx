@@ -53,15 +53,12 @@
             integrity="sha256-GAVdfR/7cRNqncNsUBZSbgGaHPgQ5yhi9FMjm+3AJTw=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.21.1/build/global/luxon.min.js"
             integrity="sha256-lOA2IFesJNmVvGlrjjCP0fdBZR0XlSRyUBCs6yuVdhs=" crossorigin="anonymous"></script>
+    {{ editor_data|json_script:"editor-data" }}
     <script>
         const app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
-            data: {
-                start_date: '{{ start_date }}',
-                next_id: {{ next_id }},
-                tasks: {{ tasks|safe }}
-            },
+            data: JSON.parse(document.getElementById('editor-data').textContent),
             computed: {
                 dates() {
                     const first_day = luxon.DateTime.fromISO(this.start_date);
@@ -98,7 +95,7 @@
                         method: 'POST',
                         body: JSON.stringify(data),
                         headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
+                            'X-CSRFToken': this.csrf_token,
                             'Content-Type': 'application/json'
                         },
                     });
@@ -114,7 +111,7 @@
                         const response = await fetch('{% url "resend_notification" %}', {
                             method: 'POST',
                             headers: {
-                                'X-CSRFToken': '{{ csrf_token }}',
+                                'X-CSRFToken': this.csrf_token,
                             },
                         });
                         if (response.status === 200) {
