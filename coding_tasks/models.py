@@ -1,6 +1,21 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+SOLUTION_LANGUAGE_CHOICES = [
+    ("c", "C"),
+    ("cpp", "C++"),
+    ("csharp", "C#"),
+    ("go", "Go"),
+    ("java", "Java"),
+    ("js", "JavaScript"),
+    ("kotlin", "Kotlin"),
+    ("python", "Python"),
+    ("ruby", "Ruby"),
+    ("rust", "Rust"),
+    ("scala", "Scala"),
+    ("text", "Text only"),
+]
+
 
 class Task(models.Model):
     class Meta:
@@ -20,5 +35,8 @@ class Solution(models.Model):
 
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    url = models.URLField(max_length=255, verbose_name="URL")
+    code = models.TextField()
+    language = models.CharField(
+        max_length=6, choices=SOLUTION_LANGUAGE_CHOICES, default="text"
+    )
     submitted_at = models.DateTimeField(auto_now=True)

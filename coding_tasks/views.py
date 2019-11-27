@@ -25,7 +25,7 @@ class SubmitView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/submit.html"
     success_url = reverse_lazy("solutions")
     model = Solution
-    fields = ["url"]
+    fields = ["code", "language"]
 
     def get_object(self, queryset=None):
         today = task_schedule.today()
