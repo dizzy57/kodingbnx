@@ -69,7 +69,7 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         last_date = all_days[-1]
 
         solutions = Solution.objects.prefetch_related("user", "task").filter(
-            task__date__lte=today, task__date__gte=last_date
+            task__date__lte=today, task__date__gte=last_date, user__is_active=True
         )
 
         solved_dates_by_user = defaultdict(set)
