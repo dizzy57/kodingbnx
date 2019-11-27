@@ -55,7 +55,9 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
     template_name = "coding_tasks/solutions_week.html"
     SHOW_COLUMNS = 7
 
-    def get_context_data(self, **context):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         today = task_schedule.today()
         all_days = [
             today - datetime.timedelta(days=x) for x in range(self.SHOW_COLUMNS)
@@ -121,7 +123,7 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
     template_name = "coding_tasks/edit_tasks.html"
 
     def get_context_data(self, **kwargs):
-        context = {}
+        context = super().get_context_data(**kwargs)
 
         start_date = task_schedule.today()
         context["start_date"] = start_date.strftime(DATE_FORMAT)
