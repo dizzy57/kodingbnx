@@ -12,7 +12,7 @@ from django.db.models import Max, Q
 from django.http import HttpResponse
 from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView, View
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView, View
 
 from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
@@ -91,6 +91,13 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         context["slackers"] = slackers
 
         return context
+
+
+class SolutionsDayView(LoginRequiredMixin, ListView):
+    template_name = "coding_tasks/solutions_day.html"
+
+    def get_queryset(self):
+        return Solution.objects.filter(task__date=self.kwargs["date"])
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):

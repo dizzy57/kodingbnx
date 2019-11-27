@@ -1,12 +1,14 @@
 import os
 
 import django.contrib.auth.views as auth_views
-from django.urls import path
+from django.urls import path, register_converter
 
+from coding_tasks.converters import DateConverter
 from coding_tasks.views import (
     EditTasksView,
     ResendNotificationView,
     SignUpView,
+    SolutionsDayView,
     SolutionsWeekView,
     SubmitView,
     UserUpdateView,
@@ -14,9 +16,12 @@ from coding_tasks.views import (
 
 ENABLE_SIGN_UP = os.environ["ENABLE_SIGN_UP"] == "1"
 
+register_converter(DateConverter, "date")
+
 urlpatterns = [
     path("", SubmitView.as_view(), name="submit"),
     path("solutions", SolutionsWeekView.as_view(), name="solutions_week"),
+    path("solutions/<date:date>", SolutionsDayView.as_view(), name="solutions_day"),
     path("user", UserUpdateView.as_view(), name="user"),
     # region Auth
     path(

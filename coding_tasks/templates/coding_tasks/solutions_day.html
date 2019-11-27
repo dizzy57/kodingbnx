@@ -1,0 +1,9 @@
+{% extends "coding_tasks/base.html" %}
+
+{% block content %}
+    {% for solution in object_list %}
+        <li>{{ solution }}</li>
+    {% empty %}
+        <li>No solutions yet.</li>
+    {% endfor %}
+{% endblock %}

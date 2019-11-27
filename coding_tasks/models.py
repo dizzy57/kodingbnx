@@ -26,7 +26,7 @@ class Task(models.Model):
     date = models.DateField(unique=True)
 
     def __str__(self):
-        return f"{self.date:%d-%m} {self.name}"
+        return f"{self.date:%d/%m} {self.name}"
 
 
 class Solution(models.Model):

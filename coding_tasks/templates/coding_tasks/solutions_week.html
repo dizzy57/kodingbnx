@@ -9,7 +9,7 @@
                 {% for date in all_days %}
                     <th scope="col">
                         {% if not forloop.first or can_disclose_solutions %}
-                            <a href="">
+                            <a href="{% url "solutions_day" date %}">
                                 {{ date|date:"D d/m" }}
                             </a>
                         {% else %}
@@ -27,7 +27,7 @@
                         <td>
                             {% if date in row_user_solved_dates %}
                                 {% if not forloop.first or can_disclose_solutions %}
-                                    <a href="">
+                                    <a href="{% url "solutions_day" date %}">
                                         x
                                     </a>
                                 {% else %}
