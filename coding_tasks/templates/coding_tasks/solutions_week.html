@@ -6,20 +6,30 @@
             <thead>
             <tr>
                 <th scope="col"></th>
-                {% for task in all_tasks %}
-                    <th scope="col" title="{{ task.name }}">{{ task.date|date:"D d/m" }}</th>
+                {% for date in all_days %}
+                    <th scope="col">
+                        {% if not forloop.first or can_disclose_solutions %}
+                            <a href="">
+                                {{ date|date:"D d/m" }}
+                            </a>
+                        {% else %}
+                            {{ date|date:"D d/m" }}
+                        {% endif %}
+                    </th>
                 {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {% for name, is_current_user, solutions in table_rows %}
-                <tr{% if is_current_user %} class="table-warning"{% endif %}>
-                    <th scope="row">{{ name }}</th>
-                    {% for solution in solutions %}
+            {% for row_user, row_user_solved_dates in users_and_solved_dates %}
+                <tr{% if row_user == user %} class="table-warning"{% endif %}>
+                    <th scope="row">{{ user.get_short_name }}</th>
+                    {% for date in all_days %}
                         <td>
-                            {% if solution %}
-                                {% if solution.url is not None %}
-                                    <a href="{{ solution.url }}" target="_blank">x</a>
+                            {% if date in row_user_solved_dates %}
+                                {% if not forloop.first or can_disclose_solutions %}
+                                    <a href="">
+                                        x
+                                    </a>
                                 {% else %}
                                     x
                                 {% endif %}

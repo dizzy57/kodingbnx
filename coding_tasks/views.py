@@ -60,39 +60,23 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         all_days = [
             today - datetime.timedelta(days=x) for x in range(self.SHOW_COLUMNS)
         ]
+        context["all_days"] = all_days
         last_date = all_days[-1]
-
-        task_by_date = {
-            task.date: task for task in Task.objects.filter(date__in=all_days)
-        }
-        all_tasks = [
-            task_by_date.get(date, Task(date=date, name="")) for date in all_days
-        ]
-        context["all_tasks"] = all_tasks
 
         solutions = Solution.objects.prefetch_related("user", "task").filter(
             task__date__lte=today, task__date__gte=last_date
         )
-        solutions_by_user = defaultdict(dict)
-        for solution in solutions:
-            if (
-                solution.task.date == today
-                and not task_schedule.can_disclose_solutions()
-            ):
-                solution.url = None
-            solutions_by_user[solution.user][solution.task.date] = solution
 
-        current_user = self.request.user
-        table_rows = [
-            (
-                user.get_short_name(),
-                user == current_user,
-                [solutions.get(day) for day in all_days],
-            )
-            for user, solutions in solutions_by_user.items()
-        ]
-        table_rows.sort(key=lambda x: x[0])
-        context["table_rows"] = table_rows
+        solved_dates_by_user = defaultdict(set)
+        for solution in solutions:
+            solved_dates_by_user[solution.user].add(solution.task.date)
+
+        users_and_solved_dates = list(solved_dates_by_user.items())
+        users_and_solved_dates.sort(key=lambda x: x[0].get_short_name())
+        context["users_and_solved_dates"] = users_and_solved_dates
+
+        can_disclose_solutions = task_schedule.can_disclose_solutions()
+        context["can_disclose_solutions"] = can_disclose_solutions
 
         users_without_recent_solutions = (
             User.objects.filter(is_active=True)
