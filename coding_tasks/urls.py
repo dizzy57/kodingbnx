@@ -7,7 +7,7 @@ from coding_tasks.views import (
     EditTasksView,
     ResendNotificationView,
     SignUpView,
-    SolutionsView,
+    SolutionsWeekView,
     SubmitView,
     UserUpdateView,
 )
@@ -16,7 +16,7 @@ ENABLE_SIGN_UP = os.environ["ENABLE_SIGN_UP"] == "1"
 
 urlpatterns = [
     path("", SubmitView.as_view(), name="submit"),
-    path("solutions", SolutionsView.as_view(), name="solutions"),
+    path("solutions", SolutionsWeekView.as_view(), name="solutions_week"),
     path("user", UserUpdateView.as_view(), name="user"),
     # region Auth
     path(

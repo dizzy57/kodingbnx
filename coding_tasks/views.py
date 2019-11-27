@@ -23,7 +23,7 @@ DATE_FORMAT = "%Y-%m-%d"
 
 class SubmitView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/submit.html"
-    success_url = reverse_lazy("solutions")
+    success_url = reverse_lazy("solutions_week")
     model = Solution
     fields = ["code", "language"]
 
@@ -51,13 +51,11 @@ class SubmitView(LoginRequiredMixin, UpdateView):
         return res
 
 
-class SolutionsView(LoginRequiredMixin, TemplateView):
-    template_name = "coding_tasks/solutions.html"
+class SolutionsWeekView(LoginRequiredMixin, TemplateView):
+    template_name = "coding_tasks/solutions_week.html"
     SHOW_COLUMNS = 7
 
-    def get_context_data(self, **kwargs):
-        context = {}
-
+    def get_context_data(self, **context):
         today = task_schedule.today()
         all_days = [
             today - datetime.timedelta(days=x) for x in range(self.SHOW_COLUMNS)

@@ -18,8 +18,8 @@
                    href="{% url "submit" %}">Submit</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{% if request.resolver_match.url_name == "solutions" %} active{% endif %}"
-                   href="{% url "solutions" %}">Solutions</a>
+                <a class="nav-link{% if request.resolver_match.url_name == "solutions_week" %} active{% endif %}"
+                   href="{% url "solutions_week" %}">Solutions</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
