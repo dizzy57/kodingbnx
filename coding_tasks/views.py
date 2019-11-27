@@ -9,10 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Max, Q
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, TemplateView, UpdateView, View
+from django.views.generic import CreateView, DetailView, TemplateView, UpdateView, View
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 
 from coding_tasks import task_schedule
 from coding_tasks.models import Solution, Task
@@ -95,11 +98,39 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class SolutionsDayView(LoginRequiredMixin, ListView):
+class SolutionsDayView(LoginRequiredMixin, DetailView):
     template_name = "coding_tasks/solutions_day.html"
+    model = Task
+    slug_url_kwarg = "date"
+    slug_field = "date"
 
-    def get_queryset(self):
-        return Solution.objects.filter(task__date=self.kwargs["date"])
+    def get_object(self, queryset=None):
+        today = task_schedule.today()
+        can_disclose_solutions = task_schedule.can_disclose_solutions()
+        date = self.kwargs["date"]
+        if date > today or (date == today and not can_disclose_solutions):
+            raise Http404("Should not disclose tasks of solutions too early")
+
+        return super().get_object(queryset)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        formatter = HtmlFormatter(linenos="table", anchorlinenos=True)
+        context["pygments_css"] = formatter.get_style_defs(".highlight")
+
+        task: Task = self.object
+        solutions = task.solution_set.select_related("user").order_by("submitted_at")
+
+        users_and_formatted_solutions = []
+        for solution in solutions:
+            lexer = get_lexer_by_name(solution.language, stripall=True)
+            formatter.lineanchors = f"u{solution.user.id}"
+            result = highlight(solution.code, lexer, formatter)
+            users_and_formatted_solutions.append((solution.user, result))
+        context["users_and_formatted_solutions"] = users_and_formatted_solutions
+
+        return context
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):

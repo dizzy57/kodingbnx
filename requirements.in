@@ -2,3 +2,4 @@ django>=2.2
 mysqlclient
 django-bootstrap4
 requests
+pygments

@@ -11,6 +11,7 @@ django-bootstrap4==1.0.1
 django==2.2.7
 idna==2.8                 # via requests
 mysqlclient==1.4.5
+pygments==2.5.1
 pytz==2019.3              # via django
 requests==2.22.0
 soupsieve==1.9.5          # via beautifulsoup4

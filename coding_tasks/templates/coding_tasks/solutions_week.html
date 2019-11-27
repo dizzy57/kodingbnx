@@ -27,7 +27,7 @@
                         <td>
                             {% if date in row_user_solved_dates %}
                                 {% if not forloop.first or can_disclose_solutions %}
-                                    <a href="{% url "solutions_day" date %}">
+                                    <a href="{% url "solutions_day" date %}#u{{ row_user.id }}-1">
                                         x
                                     </a>
                                 {% else %}
