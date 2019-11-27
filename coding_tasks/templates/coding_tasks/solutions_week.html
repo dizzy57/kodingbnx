@@ -22,7 +22,7 @@
             <tbody>
             {% for row_user, row_user_solved_dates in users_and_solved_dates %}
                 <tr{% if row_user == user %} class="table-warning"{% endif %}>
-                    <th scope="row">{{ user.get_short_name }}</th>
+                    <th scope="row">{{ row_user.get_short_name }}</th>
                     {% for date in all_days %}
                         <td>
                             {% if date in row_user_solved_dates %}

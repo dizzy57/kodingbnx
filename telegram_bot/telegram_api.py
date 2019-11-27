@@ -63,20 +63,7 @@ class TelegramBot:
         self.api.pin_message(m["result"]["message_id"])
 
     def send_solutions_for_today(self):
-        solutions = list(
-            Solution.objects.filter(task__date=self.today)
-            .order_by("user__first_name")
-            .select_related("user")
-        )
-
-        text = f"Solutions {self.today:%d/%m}:\n"
-        if solutions:
-            text += "\n".join(
-                f"{solution.user.first_name}: {solution.url}" for solution in solutions
-            )
-        else:
-            text += "None"
-
+        text = f"Solutions:\n{SITE_URL}solutions/{self.today:%Y-%m-%d}"
         self.api.send_message(text)
 
     def notify_if_no_tasks_for_tomorrow(self):
@@ -89,5 +76,5 @@ class TelegramBot:
             self.api.send_message(FIRST_DAY_OF_MONTH_MESSAGE)
 
     def notify_additional_solution(self, solution: Solution):
-        text = f"New solution by {solution.user.first_name}: {solution.url}"
+        text = f"New solution by {solution.user.first_name}: {SITE_URL}solutions/{self.today:%Y-%m-%d}#u{solution.user.id}-1"
         self.api.send_message(text)
