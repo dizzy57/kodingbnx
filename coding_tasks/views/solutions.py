@@ -122,12 +122,12 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
         task: Task = self.object
         solutions = task.solution_set.select_related("user").order_by("submitted_at")
 
-        users_and_formatted_solutions = []
+        solution_and_formatted = []
         for solution in solutions:
             lexer = get_lexer_by_name(solution.language, stripall=True)
             formatter.lineanchors = f"u{solution.user.id}"
-            result = highlight(solution.code, lexer, formatter)
-            users_and_formatted_solutions.append((solution.user, result))
-        context["users_and_formatted_solutions"] = users_and_formatted_solutions
+            formatted_solution = highlight(solution.code, lexer, formatter)
+            solution_and_formatted.append((solution, formatted_solution))
+        context["solution_and_formatted"] = solution_and_formatted
 
         return context

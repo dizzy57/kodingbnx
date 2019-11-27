@@ -6,10 +6,14 @@
 {% endblock %}
 
 {% block content %}
-    {% for user, formatted_solution in users_and_formatted_solutions %}
-        <li>{{ user }}</li>
+    <h1><a href="{{ task.url }}" target="_blank">{{ task.name }}</a></h1>
+    {% for solution, formatted_solution in solution_and_formatted %}
+        <h3>
+            {{ solution.user.get_short_name }}
+            <small class="text-muted">({{ solution.get_language_display }})</small>
+        </h3>
         {{ formatted_solution|safe }}
     {% empty %}
-        <li>No solutions yet.</li>
+        <h3>No solutions yet.</h3>
     {% endfor %}
 {% endblock %}
