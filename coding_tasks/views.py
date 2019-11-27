@@ -32,6 +32,7 @@ class SubmitView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         today = task_schedule.today()
+        user = self.request.user
 
         try:
             task = Task.objects.get(date=today)
@@ -39,11 +40,18 @@ class SubmitView(LoginRequiredMixin, UpdateView):
             return None
 
         try:
-            return Solution.objects.select_related("task").get(
-                task=task, user=self.request.user
-            )
+            return Solution.objects.select_related("task").get(task=task, user=user)
         except Solution.DoesNotExist:
-            return Solution(task=task, user=self.request.user)
+            new_solution = Solution(task=task, user=user)
+            previous_solution = (
+                Solution.objects.filter(user=user)
+                .order_by("task__date")
+                .only("language")
+                .last()
+            )
+            if previous_solution:
+                new_solution.language = previous_solution.language
+            return new_solution
 
     def form_valid(self, form):
         res = super().form_valid(form)
