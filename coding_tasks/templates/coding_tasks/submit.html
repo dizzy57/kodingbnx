@@ -1,6 +1,14 @@
 {% extends "coding_tasks/base.html" %}
 {% load bootstrap4 %}
 
+{% block additional_head %}
+    <style>
+        textarea {
+            font-family: monospace;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     {% if object %}
         <form method="post">
