@@ -11,7 +11,9 @@ CHAT_ID = int(os.environ["TELEGRAM_CHAT_ID"])
 URL_BASE = f"https://api.telegram.org/bot{BOT_API_KEY}/"
 
 SITE_URL = "https://kodingbnx.pythonanywhere.com/"
-NO_TOMORROW_TASK_MESSAGE = "@asizikov @dizzy57 No task for tomorrow"
+STAFF_USERS = "@asizikov @dizzy57"
+NO_TASK_FOR_TODAY_MESSAGE = f"{STAFF_USERS} No task for today :("
+NO_TASK_FOR_TOMORROW_MESSAGE = f"{STAFF_USERS} No task for tomorrow"
 
 
 class TelegramApi:
@@ -55,7 +57,7 @@ class TelegramBot:
         try:
             task = Task.objects.get(date=self.today)
         except Task.DoesNotExist:
-            self.api.send_message("No task for today :(")
+            self.api.send_message(NO_TASK_FOR_TODAY_MESSAGE)
             return
 
         m = self.api.send_message("\n".join((task.name, task.url, SITE_URL)))
@@ -68,7 +70,7 @@ class TelegramBot:
     def notify_if_no_tasks_for_tomorrow(self):
         tomorrow = self.today + datetime.timedelta(days=1)
         if not Task.objects.filter(date=tomorrow):
-            self.api.send_message(NO_TOMORROW_TASK_MESSAGE)
+            self.api.send_message(NO_TASK_FOR_TOMORROW_MESSAGE)
 
     def notify_additional_solution(self, solution: Solution):
         text = f"New solution by {solution.user.first_name}: {SITE_URL}solutions/{self.today:%Y-%m-%d}#u{solution.user.id}"
