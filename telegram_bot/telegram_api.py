@@ -1,5 +1,6 @@
 import datetime
 import os
+from collections import defaultdict
 
 import requests
 from django.urls import reverse
@@ -65,8 +66,28 @@ class TelegramBot:
         self.api.pin_message(m["result"]["message_id"])
 
     def send_solutions_for_today(self):
+        solutions = list(
+            Solution.objects.defer("code")
+            .filter(task__date=self.today)
+            .order_by("language", "submitted_at")
+            .select_related("user")
+        )
+
         today_solutions_url = reverse("solutions_day", kwargs={"date": self.today})
-        text = f"Solutions:\n{SITE_URL}{today_solutions_url}"
+        text = f"Solutions:\n{SITE_URL}{today_solutions_url}\n"
+
+        if solutions:
+            users_by_language = defaultdict(list)
+            for solution in solutions:
+                users_by_language[solution.get_language_display()].append(
+                    solution.user.get_short_name()
+                )
+            for language, users in users_by_language.items():
+                text += f"\n{language}:\n  "
+                text += "\n  ".join(users)
+        else:
+            text += "No solutions submitted :("
+
         self.api.send_message(text)
 
     def notify_if_no_tasks_for_tomorrow(self):
