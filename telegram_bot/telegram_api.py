@@ -12,7 +12,6 @@ URL_BASE = f"https://api.telegram.org/bot{BOT_API_KEY}/"
 
 SITE_URL = "https://kodingbnx.pythonanywhere.com/"
 NO_TOMORROW_TASK_MESSAGE = "@asizikov @dizzy57 No task for tomorrow"
-FIRST_DAY_OF_MONTH_MESSAGE = "@dizzy57 Refresh the hosting"
 
 
 class TelegramApi:
@@ -70,10 +69,6 @@ class TelegramBot:
         tomorrow = self.today + datetime.timedelta(days=1)
         if not Task.objects.filter(date=tomorrow):
             self.api.send_message(NO_TOMORROW_TASK_MESSAGE)
-
-    def notify_if_first_day_of_month(self):
-        if self.today.day == 1:
-            self.api.send_message(FIRST_DAY_OF_MONTH_MESSAGE)
 
     def notify_additional_solution(self, solution: Solution):
         text = f"New solution by {solution.user.first_name}: {SITE_URL}solutions/{self.today:%Y-%m-%d}#u{solution.user.id}"

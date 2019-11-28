@@ -25,7 +25,6 @@ def morning_send_task():
     with TelegramBot() as bot:
         bot.send_and_pin_task_for_today()
         bot.notify_if_no_tasks_for_tomorrow()
-        bot.notify_if_first_day_of_month()
 
 
 @cronjob_api_call
