@@ -76,5 +76,5 @@ class TelegramBot:
             self.api.send_message(FIRST_DAY_OF_MONTH_MESSAGE)
 
     def notify_additional_solution(self, solution: Solution):
-        text = f"New solution by {solution.user.first_name}: {SITE_URL}solutions/{self.today:%Y-%m-%d}#u{solution.user.id}-1"
+        text = f"New solution by {solution.user.first_name}: {SITE_URL}solutions/{self.today:%Y-%m-%d}#u{solution.user.id}"
         self.api.send_message(text)

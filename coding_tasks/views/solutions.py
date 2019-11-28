@@ -116,7 +116,7 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        formatter = HtmlFormatter(linenos="table", anchorlinenos=True)
+        formatter = HtmlFormatter()
         context["pygments_css"] = formatter.get_style_defs(".highlight")
 
         task: Task = self.object
@@ -125,7 +125,6 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
         solution_and_formatted = []
         for solution in solutions:
             lexer = get_lexer_by_name(solution.language, stripall=True)
-            formatter.lineanchors = f"u{solution.user.id}"
             formatted_solution = highlight(solution.code, lexer, formatter)
             solution_and_formatted.append((solution, formatted_solution))
         context["solution_and_formatted"] = solution_and_formatted

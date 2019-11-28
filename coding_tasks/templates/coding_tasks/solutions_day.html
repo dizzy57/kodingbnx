@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1><a href="{{ task.url }}" target="_blank">{{ task.name }}</a></h1>
+    <h2><a href="{{ task.url }}" target="_blank">{{ task.name }}</a></h2>
     {% for solution, formatted_solution in solution_and_formatted %}
-        <h3>
+        <h3 id="u{{ solution.user.id }}">
             {{ solution.user.get_short_name }}
             <small class="text-muted">({{ solution.get_language_display }})</small>
         </h3>

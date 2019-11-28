@@ -7,7 +7,7 @@
             <tr>
                 <th scope="col"></th>
                 {% for date in all_days %}
-                    <th scope="col">
+                    <th scope="col" class="text-center">
                         {% if not forloop.first or can_disclose_solutions %}
                             <a href="{% url "solutions_day" date %}">
                                 {{ date|date:"D d/m" }}
@@ -24,14 +24,14 @@
                 <tr{% if row_user == user %} class="table-warning"{% endif %}>
                     <th scope="row">{{ row_user.get_short_name }}</th>
                     {% for date in all_days %}
-                        <td>
+                        <td class="text-center">
                             {% if date in row_user_solved_dates %}
                                 {% if not forloop.first or can_disclose_solutions %}
-                                    <a href="{% url "solutions_day" date %}#u{{ row_user.id }}-1">
-                                        x
+                                    <a href="{% url "solutions_day" date %}#u{{ row_user.id }}">
+                                        &#9989;
                                     </a>
                                 {% else %}
-                                    x
+                                    &#9989;
                                 {% endif %}
                             {% endif %}
                         </td>
