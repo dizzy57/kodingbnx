@@ -120,7 +120,9 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
         context["pygments_css"] = formatter.get_style_defs(".highlight")
 
         task: Task = self.object
-        solutions = task.solution_set.select_related("user").order_by("submitted_at")
+        solutions = task.solution_set.select_related("user").order_by(
+            "user__first_name"
+        )
 
         solution_and_formatted = []
         for solution in solutions:
