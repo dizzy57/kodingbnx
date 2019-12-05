@@ -1,3 +1,4 @@
+pip-tools
 django>=2.2,<3
 mysqlclient
 django-bootstrap4
