@@ -8,6 +8,6 @@ click==7.0                # via pip-tools
 django-debug-toolbar==2.1
 django-extensions==2.2.5
 django==2.2.8             # via django-debug-toolbar
-pip-tools==4.2.0
+pip-tools==4.3.0
 six==1.13.0               # via django-extensions, pip-tools
 sqlparse==0.3.0           # via django, django-debug-toolbar
