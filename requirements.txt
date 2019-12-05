@@ -14,6 +14,7 @@ idna==2.8                 # via requests
 mysqlclient==1.4.6
 pip-tools==4.3.0
 pygments==2.5.2
+python-dotenv==0.10.3
 pytz==2019.3              # via django
 requests==2.22.0
 six==1.13.0               # via pip-tools

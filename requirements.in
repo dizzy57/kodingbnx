@@ -4,3 +4,4 @@ mysqlclient
 django-bootstrap4
 requests
 pygments
+python-dotenv
