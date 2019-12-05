@@ -8,7 +8,7 @@ beautifulsoup4==4.8.1     # via django-bootstrap4
 certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
 django-bootstrap4==1.0.1
-django==2.2.7
+django==2.2.8
 idna==2.8                 # via requests
 mysqlclient==1.4.5
 pygments==2.5.1
