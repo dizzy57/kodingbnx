@@ -85,6 +85,7 @@ DATABASES = {
         "USER": os.environ["MYSQL_USER"],
         "PASSWORD": os.environ["MYSQL_PASSWORD"],
         "HOST": os.environ["MYSQL_HOST"],
+        "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 
