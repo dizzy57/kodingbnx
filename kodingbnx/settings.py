@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bootstrap4",
+    "octicons",
     "debug_toolbar",
     "django_extensions",
     "coding_tasks",

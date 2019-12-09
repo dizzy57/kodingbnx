@@ -1,5 +1,15 @@
 {% extends "coding_tasks/base.html" %}
+{% load octicons %}
 
+{% block additional_head %}
+    <style>
+        .octicon {
+            display: inline-block;
+            vertical-align: text-top;
+            fill: currentColor;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <div class="table-responsive">
         <table class="table">
@@ -28,10 +38,10 @@
                             {% if date in row_user_solved_dates %}
                                 {% if not forloop.first or can_disclose_solutions %}
                                     <a href="{% url "solutions_day" date %}#u{{ row_user.id }}">
-                                        &#9989;
+                                        {% octicon "check" %}
                                     </a>
                                 {% else %}
-                                    &#10004;
+                                    {% octicon "check" %}
                                 {% endif %}
                             {% endif %}
                         </td>
