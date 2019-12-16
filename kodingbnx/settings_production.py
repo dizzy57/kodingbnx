@@ -127,3 +127,5 @@ STATIC_ROOT = "/home/kodingbnx/static"
 LOGIN_URL = "login"
 
 LOGIN_REDIRECT_URL = "submit"
+
+SESSION_COOKIE_AGE = 31536000  # 365 days, in seconds

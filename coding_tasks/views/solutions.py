@@ -47,6 +47,10 @@ class SubmitView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         res = super().form_valid(form)
+        # Since we're already writing to the database, let's bump the session too
+        # This will send a new cookie to the user
+        self.request.session.modified = True
+
         if task_schedule.can_disclose_solutions():
             # We've got an additional solution after the deadline
             with TelegramBot() as bot:
