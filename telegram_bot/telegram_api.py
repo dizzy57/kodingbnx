@@ -89,5 +89,5 @@ class TelegramBot:
 
     def notify_additional_solution(self, solution: Solution):
         today_solutions_url = reverse("solutions_day", kwargs={"date": self.today})
-        text = f"New solution by {solution.user.get_short_name()} ({solution.language}): {SITE_URL}{today_solutions_url}#u{solution.user.id}"
+        text = f"New solution by {solution.user.get_short_name()} ({solution.get_language_display()}): {SITE_URL}{today_solutions_url}#u{solution.user.id}"
         self.api.send_message(text)
