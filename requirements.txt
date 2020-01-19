@@ -5,21 +5,21 @@
 #    pip-compile
 #
 asgiref==3.2.3            # via django
-beautifulsoup4==4.8.1     # via django-bootstrap4
+beautifulsoup4==4.8.2     # via django-bootstrap4
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via pip-tools
 django-bootstrap4==1.1.1
 django-octicons==1.0.2
-django==3.0
+django==3.0.2
 idna==2.8                 # via requests
 mysqlclient==1.4.6
-pip-tools==4.3.0
+pip-tools==4.4.0
 pygments==2.5.2
-python-dotenv==0.10.3
+python-dotenv==0.10.5
 pytz==2019.3              # via django
 requests==2.22.0
-six==1.13.0               # via pip-tools
+six==1.14.0               # via pip-tools
 soupsieve==1.9.5          # via beautifulsoup4
 sqlparse==0.3.0           # via django
-urllib3==1.25.7           # via requests
+urllib3==1.25.8           # via requests
