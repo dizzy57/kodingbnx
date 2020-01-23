@@ -2,7 +2,7 @@ import os
 
 from django.db import migrations
 
-DB_NAME = os.environ["MYSQL_DB_NAME"]
+DB_NAME = os.environ["MYSQL_DATABASE"]
 
 
 class Migration(migrations.Migration):
