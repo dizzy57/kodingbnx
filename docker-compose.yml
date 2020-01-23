@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: /bin/sh -c "set -x && wait-for-it db:3306 && /venv/bin/python manage.py migrate --noinput && unbuffer /venv/bin/python -u manage.py runserver_plus 0.0.0.0:8000"
+    container_name: kodingbnx
+    volumes:
+      - ./src:/app
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  db:
+    image: mysql:5
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env_file:
+      - ./.env.dev
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+
+volumes:
+  mysql_data:
