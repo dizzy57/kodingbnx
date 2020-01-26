@@ -9,4 +9,4 @@ django-extensions==2.2.6
 django==3.0.2             # via django-debug-toolbar
 six==1.14.0               # via django-extensions
 sqlparse==0.3.0           # via django, django-debug-toolbar
-werkzeug==0.16.0
+werkzeug==0.16.1
