@@ -94,7 +94,7 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
             .order_by("last_solution")
         )
         slackers = [
-            (user.get_short_name() or user.username, user.last_solution)
+            (user.get_short_name(), user.last_solution)
             for user in users_without_recent_solutions
         ]
         context["slackers"] = slackers

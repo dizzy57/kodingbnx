@@ -1,8 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
+
+from coding_tasks.forms import CreateUserAndSetShortNameForm
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -18,4 +19,4 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class SignUpView(CreateView):
     template_name = "coding_tasks/sign_up.html"
     success_url = reverse_lazy("login")
-    form_class = UserCreationForm
+    form_class = CreateUserAndSetShortNameForm
