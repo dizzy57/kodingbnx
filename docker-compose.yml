@@ -13,6 +13,8 @@ services:
       - ./.env.dev
     depends_on:
       - db
+    cap_add:
+      - SYS_TIME
   db:
     image: mysql:5
     volumes:
