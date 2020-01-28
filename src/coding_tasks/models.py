@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Task(models.Model):
@@ -36,3 +38,14 @@ class Solution(models.Model):
         max_length=6, choices=SolutionLanguage.choices, default=SolutionLanguage.TEXT
     )
     submitted_at = models.DateTimeField(auto_now=True)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    away_until = models.DateField(blank=True, null=True)
+
+
+@receiver(post_save, sender=User)
+def on_user_create(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
