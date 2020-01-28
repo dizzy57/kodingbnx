@@ -26,11 +26,14 @@
                 <a class="nav-link{% if request.resolver_match.url_name == "user" %} active{% endif %}"
                    href="{% url "user" %}">User</a>
             </li>
-            {% if perms.coding_tasks.edit_tasks %}
+            {% if user.is_staff %}
                 <li class="nav-item">
                     <a class="nav-link{% if request.resolver_match.url_name == "edit_tasks" %} active{% endif %}"
                        href="{% url "edit_tasks" %}">Edit tasks</a>
                 </li>
+            {% endif %}
+            {% if user.is_superuser %}
+                <li class="nav-item"><a class="nav-link" href="{% url "admin:index" %}">Admin</a></li>
             {% endif %}
         </ul>
     {% endblock %}

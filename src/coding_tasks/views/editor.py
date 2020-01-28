@@ -3,7 +3,7 @@ import itertools
 import json
 
 from django.conf import settings
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse
@@ -18,8 +18,12 @@ from telegram_bot.telegram_api import TelegramBot
 DATE_FORMAT = "%Y-%m-%d"
 
 
-class EditTasksView(PermissionRequiredMixin, TemplateView):
-    permission_required = "coding_tasks.edit_tasks"
+class StaffuserRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class EditTasksView(StaffuserRequiredMixin, TemplateView):
     template_name = "coding_tasks/edit_tasks.html"
 
     def get_context_data(self, **kwargs):
@@ -72,9 +76,7 @@ class EditTasksView(PermissionRequiredMixin, TemplateView):
         return HttpResponse()
 
 
-class ResendNotificationView(PermissionRequiredMixin, View):
-    permission_required = "coding_tasks.edit_tasks"
-
+class ResendNotificationView(StaffuserRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         with TelegramBot() as bot:
             bot.send_and_pin_task_for_today()

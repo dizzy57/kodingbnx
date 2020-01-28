@@ -3,9 +3,6 @@ from django.db import models
 
 
 class Task(models.Model):
-    class Meta:
-        permissions = [("edit_tasks", "Can edit task list")]
-
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=255)
     date = models.DateField(unique=True)
