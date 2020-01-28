@@ -76,9 +76,12 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
             task__date__lte=today, task__date__gte=last_date, user__is_active=True
         )
 
+        tasks_by_day = {}
         solved_dates_by_user = defaultdict(set)
         for solution in solutions:
+            tasks_by_day[solution.task.date] = solution.task
             solved_dates_by_user[solution.user].add(solution.task.date)
+        context["days_and_tasks"] = [(day, tasks_by_day.get(day)) for day in all_days]
 
         users_and_solved_dates = list(solved_dates_by_user.items())
         users_and_solved_dates.sort(key=lambda x: x[0].get_short_name())
