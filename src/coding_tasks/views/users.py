@@ -1,19 +1,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView
+from shapeshifter.views import MultiModelFormView
 
-from coding_tasks.forms import CreateUserAndSetShortNameForm
+from coding_tasks.forms import (
+    CreateUserAndSetShortNameForm,
+    ProfileUpdateForm,
+    UserUpdateForm,
+)
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, MultiModelFormView):
     template_name = "coding_tasks/user.html"
     success_url = reverse_lazy("user")
-    model = User
-    fields = ["first_name"]
+    form_classes = [UserUpdateForm, ProfileUpdateForm]
 
-    def get_object(self, queryset=None):
-        return self.request.user
+    def get_instances(self):
+        user = self.request.user
+        return {
+            "userupdateform": user,
+            "profileupdateform": user.profile,
+        }
 
 
 class SignUpView(CreateView):

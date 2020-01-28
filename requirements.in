@@ -6,3 +6,4 @@ requests
 pygments
 python-dotenv
 django-octicons
+django-shapeshifter
