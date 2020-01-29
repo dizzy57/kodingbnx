@@ -18,10 +18,14 @@
                 <th scope="col"></th>
                 {% for date, task in days_and_tasks %}
                     <th scope="col" class="text-center"{% if task %} title="{{ task.name }}"{% endif %}>
-                        {% if not forloop.first or can_disclose_solutions %}
-                            <a href="{% url "solutions_day" date %}">
+                        {% if task %}
+                            {% if not forloop.first or can_disclose_solutions %}
+                                <a href="{% url "solutions_day" date %}">
+                                    {{ date|date:"D d/m" }}
+                                </a>
+                            {% else %}
                                 {{ date|date:"D d/m" }}
-                            </a>
+                            {% endif %}
                         {% else %}
                             {{ date|date:"D d/m" }}
                         {% endif %}
