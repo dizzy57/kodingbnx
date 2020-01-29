@@ -90,19 +90,40 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         can_disclose_solutions = task_schedule.can_disclose_solutions()
         context["can_disclose_solutions"] = can_disclose_solutions
 
-        users_without_recent_solutions = (
+        users_without_recent_solutions = list(
             User.objects.filter(is_active=True)
             .annotate(last_solution=Max("solution__task__date"))
             .filter(Q(last_solution__lt=last_date) | Q(last_solution=None))
-            .order_by("last_solution")
+            .select_related("profile")
         )
-        slackers = [
-            (user.get_short_name(), user.last_solution)
+
+        slackers = {
+            user
             for user in users_without_recent_solutions
+            if user.profile.away_until is None or user.profile.away_until < today
+        }
+
+        slackers_and_last_seen_date = [
+            (user.get_short_name(), self.last_seen_date(user)) for user in slackers
         ]
-        context["slackers"] = slackers
+        slackers_and_last_seen_date.sort(key=lambda x: x[1] or datetime.date.min)
+        context["slackers_and_last_seen_date"] = slackers_and_last_seen_date
+
+        away_and_away_until_date = [
+            (user.get_short_name(), user.profile.away_until)
+            for user in users_without_recent_solutions
+            if user not in slackers
+        ]
+        away_and_away_until_date.sort(key=lambda x: x[1])
+        context["away_and_away_until_date"] = away_and_away_until_date
 
         return context
+
+    @staticmethod
+    def last_seen_date(user):
+        dates = [user.last_solution, user.profile.away_until]
+        non_none_dates = [x for x in dates if x is not None]
+        return max(non_none_dates, default=None)
 
 
 class SolutionsDayView(LoginRequiredMixin, DetailView):

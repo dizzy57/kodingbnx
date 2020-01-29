@@ -52,10 +52,16 @@
                     {% endfor %}
                 </tr>
             {% endfor %}
-            {% for name, last_solution in slackers %}
+            {% for name, last_seen in slackers_and_last_seen_date %}
                 <tr class="table-danger">
                     <th scope="row">{{ name }}</th>
-                    <td colspan="2">{{ last_solution|timesince|default:"Never" }}</td>
+                    <td colspan="2">{{ last_seen|timesince|default:"Never" }}</td>
+                </tr>
+            {% endfor %}
+            {% for name, away_until in away_and_away_until_date %}
+                <tr class="table-info">
+                    <th scope="row">{{ name }}</th>
+                    <td colspan="2"> away until {{ away_until|date:"d/m" }}</td>
                 </tr>
             {% endfor %}
             </tbody>
