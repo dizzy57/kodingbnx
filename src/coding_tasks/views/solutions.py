@@ -113,7 +113,7 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
         can_disclose_solutions = task_schedule.can_disclose_solutions()
         date = self.kwargs["date"]
         if date > today or (date == today and not can_disclose_solutions):
-            raise Http404("Should not disclose tasks of solutions too early")
+            raise Http404("Should not disclose tasks or solutions too early")
 
         return super().get_object(queryset)
 
