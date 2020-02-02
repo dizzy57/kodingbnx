@@ -4,7 +4,7 @@ import pytz
 
 TZ = pytz.timezone("Europe/Amsterdam")
 NEW_TASK_TIME = datetime.time(hour=5, minute=59)
-SOLUTIONS_TIME = datetime.time(hour=19)
+SOLUTIONS_TIME = datetime.time(hour=18)
 
 
 def today(now=None):
