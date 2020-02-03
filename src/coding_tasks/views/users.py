@@ -1,19 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, RedirectView
 from shapeshifter.views import MultiModelFormView
 
 from coding_tasks.forms import (
     CreateUserAndSetShortNameForm,
     ProfileUpdateForm,
+    SuggestionAddForm,
     UserUpdateForm,
 )
+from coding_tasks.models import Suggestion
 
 
 class UserUpdateView(LoginRequiredMixin, MultiModelFormView):
     template_name = "coding_tasks/user.html"
     success_url = reverse_lazy("user")
     form_classes = [UserUpdateForm, ProfileUpdateForm]
+    extra_context = {"suggestion_form": SuggestionAddForm()}
 
     def get_instances(self):
         user = self.request.user
@@ -21,6 +24,19 @@ class UserUpdateView(LoginRequiredMixin, MultiModelFormView):
             "userupdateform": user,
             "profileupdateform": user.profile,
         }
+
+
+class SuggestionAddView(LoginRequiredMixin, RedirectView):
+    pattern_name = "user"
+
+    def post(self, request, *args, **kwargs):
+        form = SuggestionAddForm(request.POST)
+        if form.is_valid():
+            url = form.cleaned_data["url"]
+            Suggestion.objects.update_or_create(
+                url=url, defaults={"user": request.user}
+            )
+        return super().post(request, *args, **kwargs)
 
 
 class SignUpView(CreateView):

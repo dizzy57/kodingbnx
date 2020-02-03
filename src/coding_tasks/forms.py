@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import DateInput, ModelForm
+from django.forms import DateInput, Form, ModelForm, URLField, URLInput
 
 from coding_tasks.models import Profile
 
@@ -26,3 +26,7 @@ class ProfileUpdateForm(ModelForm):
         model = Profile
         fields = ["away_until"]
         widgets = {"away_until": DateInput(attrs={"type": "date"})}
+
+
+class SuggestionAddForm(Form):
+    url = URLField(label="Suggest task", widget=URLInput(attrs={"placeholder": "URL"}))

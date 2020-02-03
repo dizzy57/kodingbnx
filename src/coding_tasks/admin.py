@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from coding_tasks.models import Profile, Solution, Task
+from coding_tasks.models import Profile, Solution, Suggestion, Task
 
 
 @admin.register(Task)
@@ -20,3 +20,9 @@ class SolutionAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ["user", "away_until"]
+
+
+@admin.register(Suggestion)
+class SuggestionAdmin(admin.ModelAdmin):
+    list_display = ["url", "user", "submitted_at"]
+    ordering = ["-submitted_at"]

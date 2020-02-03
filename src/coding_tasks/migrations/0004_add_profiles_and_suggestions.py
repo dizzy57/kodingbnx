@@ -13,6 +13,7 @@ def create_profiles(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [
         ("auth", "0011_update_proxy_permissions"),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ("coding_tasks", "0003_switch_to_utf8mb4_columns"),
     ]
 
@@ -33,5 +34,28 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AlterModelOptions(name="task", options={}),
+        migrations.CreateModel(
+            name="Suggestion",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("url", models.URLField(max_length=255, unique=True)),
+                ("submitted_at", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+            ],
+        ),
         migrations.RunPython(create_profiles, migrations.RunPython.noop),
     ]

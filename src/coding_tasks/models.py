@@ -40,6 +40,12 @@ class Solution(models.Model):
     submitted_at = models.DateTimeField(auto_now=True)
 
 
+class Suggestion(models.Model):
+    url = models.URLField(max_length=255, unique=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    submitted_at = models.DateTimeField(auto_now=True)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     away_until = models.DateField(blank=True, null=True)
