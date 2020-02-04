@@ -123,8 +123,15 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-INTERNAL_IPS = ["127.0.0.1", "172.24.0.1"]
-
 LOGIN_URL = "login"
 
 LOGIN_REDIRECT_URL = "submit"
+
+
+def show_django_debug_toolbar_in_debug_mode(request):
+    return DEBUG
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": "kodingbnx.settings.show_django_debug_toolbar_in_debug_mode",
+}
