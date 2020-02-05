@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from coding_tasks import task_schedule
-from coding_tasks.models import Task
+from coding_tasks.models import Suggestion, Task
 from telegram_bot.telegram_api import TelegramBot
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -49,10 +49,16 @@ class EditTasksView(StaffuserRequiredMixin, TemplateView):
             {"id": idx, **tasks_by_date.get(date, empty_task)}
             for idx, date in enumerate(dates)
         ]
-        editor_data["next_id"] = len(tasks)
 
+        suggestions = list(
+            Suggestion.objects.values("id", "url").order_by("-submitted_at")
+        )
+
+        editor_data["next_id"] = len(tasks)
         editor_data["tasks"] = tasks
         editor_data["csrf_token"] = get_csrf_token(self.request)
+        editor_data["suggestions"] = suggestions
+        editor_data["deleted_suggestions"] = []
 
         context["editor_data"] = editor_data
         context["debug"] = settings.DEBUG
@@ -73,6 +79,7 @@ class EditTasksView(StaffuserRequiredMixin, TemplateView):
                     delete_dates.append(date)
                 date += datetime.timedelta(days=1)
             Task.objects.filter(Q(date__in=delete_dates) | Q(date__gte=date)).delete()
+            Suggestion.objects.filter(id__in=data["deleted_suggestions"]).delete()
         return HttpResponse()
 
 

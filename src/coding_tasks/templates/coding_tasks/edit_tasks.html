@@ -1,4 +1,5 @@
 {% extends "coding_tasks/base.html" %}
+{% load octicons %}
 
 {% block content %}
     <div id="app"></div>
@@ -44,9 +45,9 @@
                     </div>
                 </li>
             </draggable>
-            <div class="row">
+            <div class="row my-3">
                 <div class="col-auto mr-auto">
-                    <button type="button" class="btn btn-secondary" @click="add_row()">Add row</button>
+                    <button type="button" class="btn btn-secondary" @click="add_task()">Add row</button>
                     <button type="button" class="btn btn-primary" @click="save_tasks()">Save</button>
                 </div>
                 <div class="col-auto">
@@ -54,6 +55,23 @@
                     </button>
                 </div>
             </div>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(suggestion, idx) in suggestions" :key="suggestion.id">
+                    <div class="form-row">
+                        <div class="col-sm-10">
+                            <a :href="[[ suggestion.url ]]" target="_blank">[[ suggestion.url ]]</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="close col-6" @click="remove_suggestion(idx)">
+                                &times;
+                            </button>
+                            <button type="button" class="close col-6" @click="use_suggestion(idx)">
+                                {% octicon "chevron-up" height="24" %}
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </script>
     <script>
@@ -86,14 +104,15 @@
                         this.tasks.splice(idx, 1);
                     }
                 },
-                add_row() {
-                    this.tasks.push({id: this.next_id, name: '', url: ''});
+                add_task(url = '') {
+                    this.tasks.push({id: this.next_id, name: '', url: url});
                     this.next_id = this.next_id + 1;
                 },
                 async save_tasks() {
                     const data = {
                         start_date: this.start_date,
-                        tasks: this.tasks
+                        tasks: this.tasks,
+                        deleted_suggestions: this.deleted_suggestions,
                     };
                     const response = await fetch('', {
                         method: 'POST',
@@ -124,7 +143,15 @@
                             alert('Error while sending notification')
                         }
                     }
-                }
+                },
+                use_suggestion(idx) {
+                    this.add_task(this.suggestions[idx].url);
+                    this.remove_suggestion(idx);
+                },
+                remove_suggestion(idx) {
+                    this.deleted_suggestions.push(this.suggestions[idx].id);
+                    this.suggestions.splice(idx, 1);
+                },
             }
         });
     </script>
