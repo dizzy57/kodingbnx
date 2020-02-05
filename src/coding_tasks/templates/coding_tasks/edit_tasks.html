@@ -89,7 +89,7 @@
                         res.push(first_day.plus({days: i}));
                     }
                     return res;
-                }
+                },
             },
             methods: {
                 is_valid_task(idx) {
@@ -119,7 +119,7 @@
                         body: JSON.stringify(data),
                         headers: {
                             'X-CSRFToken': this.csrf_token,
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                     });
                     if (response.status === 200) {
@@ -140,7 +140,7 @@
                         if (response.status === 200) {
                             alert('Notification sent');
                         } else {
-                            alert('Error while sending notification')
+                            alert('Error while sending notification');
                         }
                     }
                 },
@@ -152,7 +152,7 @@
                     this.deleted_suggestions.push(this.suggestions[idx].id);
                     this.suggestions.splice(idx, 1);
                 },
-            }
+            },
         });
     </script>
 {% endblock %}
