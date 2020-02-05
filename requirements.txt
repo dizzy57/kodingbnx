@@ -11,10 +11,10 @@ chardet==3.0.4            # via requests
 click==7.0                # via pip-tools
 django-bootstrap4==1.1.1
 django-octicons==1.0.2
-django==3.0.2
+django==3.0.3
 idna==2.8                 # via requests
 mysqlclient==1.4.6
-pip-tools==4.4.0
+pip-tools==4.4.1
 pygments==2.5.2
 python-dotenv==0.10.5
 pytz==2019.3              # via django
