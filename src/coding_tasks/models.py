@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -54,4 +56,4 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def on_user_create(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, away_until=datetime.date.today())
