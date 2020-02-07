@@ -18,7 +18,7 @@ services:
     restart: on-failure
     stop_signal: SIGINT
   db:
-    image: mysql:5
+    image: mysql:5.7
     volumes:
       - mysql_data:/var/lib/mysql
     env_file:
