@@ -17,7 +17,11 @@ class Task(models.Model):
 
 class Solution(models.Model):
     class Meta:
-        unique_together = ["task", "user"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "task"], name="one_solution_per_user",
+            ),
+        ]
 
     class SolutionLanguage(models.TextChoices):
         C = "c", "C"
