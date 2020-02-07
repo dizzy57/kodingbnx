@@ -2,6 +2,7 @@ import datetime
 import os
 
 import requests
+from constance import config
 from django.contrib.auth.models import User
 from django.urls import reverse
 
@@ -59,10 +60,15 @@ class TelegramBot:
         try:
             task = Task.objects.get(date=self.today)
         except Task.DoesNotExist:
-            self.api.send_message(NO_TASK_FOR_TODAY_MESSAGE)
+            if config.WARN_NO_TASK:
+                self.api.send_message(NO_TASK_FOR_TODAY_MESSAGE)
             return
 
-        m = self.api.send_message("\n".join((task.name, task.url, SITE_URL + "/")))
+        message_lines = [task.name, task.url, SITE_URL + "/"]
+        if config.DAILY_MESSAGE:
+            message_lines.append("\n" + config.DAILY_MESSAGE)
+
+        m = self.api.send_message("\n".join(message_lines))
         self.api.pin_message(m["result"]["message_id"])
 
     def send_solutions_for_today(self):
@@ -83,6 +89,8 @@ class TelegramBot:
         self.api.send_message(text)
 
     def notify_if_no_tasks_for_tomorrow(self):
+        if not config.WARN_NO_TASK:
+            return
         tomorrow = self.today + datetime.timedelta(days=1)
         if not Task.objects.filter(date=tomorrow):
             self.api.send_message(NO_TASK_FOR_TOMORROW_MESSAGE)

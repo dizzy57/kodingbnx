@@ -79,6 +79,8 @@ CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
 CONSTANCE_CONFIG = {
     "ENABLE_SIGN_UP": (False, "Enable sign up button on login page"),
+    "WARN_NO_TASK": (True, "Warn if there's no task planned for today or tomorrow"),
+    "DAILY_MESSAGE": ("", "Custom message to append to the daily announce"),
 }
 
 LANGUAGE_CODE = "en-us"
