@@ -17,6 +17,8 @@ DEFAULT_APPS = [
 THIRD_PARTY_APPS = [
     "bootstrap4",
     "octicons",
+    "constance",
+    "constance.backends.database",
 ]
 
 LOCAL_APPS = [
@@ -72,6 +74,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
+
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+
+CONSTANCE_CONFIG = {
+    "ENABLE_SIGN_UP": (False, "Enable sign up button on login page"),
+}
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

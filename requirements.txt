@@ -10,7 +10,9 @@ certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via pip-tools
 django-bootstrap4==1.1.1
+django-constance[database]==2.6.0
 django-octicons==1.0.2
+django-picklefield==2.1.1  # via django-constance
 django-shapeshifter==18.9.23
 django==3.0.3
 idna==2.8                 # via requests

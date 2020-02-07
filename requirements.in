@@ -7,3 +7,4 @@ pygments
 python-dotenv
 django-octicons
 django-shapeshifter
+django-constance[database]

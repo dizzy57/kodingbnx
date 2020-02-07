@@ -1,4 +1,6 @@
+from constance import config
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView
 from shapeshifter.views import MultiModelFormView
@@ -43,3 +45,8 @@ class SignUpView(CreateView):
     template_name = "coding_tasks/sign_up.html"
     success_url = reverse_lazy("login")
     form_class = CreateUserAndSetShortNameForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not config.ENABLE_SIGN_UP:
+            return HttpResponseNotFound()
+        return super().dispatch(request, *args, **kwargs)

@@ -1,14 +1,11 @@
-import os
-
 import django.contrib.auth.views as auth_views
+from constance import config
 from django.urls import path, register_converter
 
 from coding_tasks.converters import DateConverter
 from coding_tasks.views.editor import EditTasksView, ResendNotificationView
 from coding_tasks.views.solutions import SolutionsDayView, SolutionsWeekView, SubmitView
 from coding_tasks.views.users import SignUpView, SuggestionAddView, UserUpdateView
-
-ENABLE_SIGN_UP = os.environ["ENABLE_SIGN_UP"] == "1"
 
 register_converter(DateConverter, "date")
 
@@ -23,10 +20,11 @@ urlpatterns = [
         "login",
         auth_views.LoginView.as_view(
             template_name="coding_tasks/login.html",
-            extra_context={"enable_sign_up": ENABLE_SIGN_UP},
+            extra_context={"enable_sign_up": lambda: config.ENABLE_SIGN_UP},
         ),
         name="login",
     ),
+    path("sign_up", SignUpView.as_view(), name="sign_up"),
     path("logout", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
     path(
         "password_change",
@@ -45,6 +43,3 @@ urlpatterns = [
     ),
     # endregion
 ]
-
-if ENABLE_SIGN_UP:
-    urlpatterns.append(path("sign_up", SignUpView.as_view(), name="sign_up"))
