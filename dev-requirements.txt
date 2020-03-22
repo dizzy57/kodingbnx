@@ -4,7 +4,7 @@
 #
 #    pip-compile dev-requirements.in
 #
-asgiref==3.2.3            # via -c requirements.txt, django
+asgiref==3.2.5            # via -c requirements.txt, django
 django-debug-toolbar==2.2  # via -r dev-requirements.in
 django-extensions==2.2.8  # via -r dev-requirements.in
 django==3.0.4             # via -c requirements.txt, django-debug-toolbar

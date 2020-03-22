@@ -100,7 +100,7 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         slackers = {
             user
             for user in users_without_recent_solutions
-            if user.profile.away_until is None or user.profile.away_until < today
+            if user.profile.away_until is None or user.profile.away_until <= today
         }
 
         slackers_and_last_seen_date = [

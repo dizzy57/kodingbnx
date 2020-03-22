@@ -4,11 +4,11 @@
 #
 #    pip-compile
 #
-asgiref==3.2.3            # via django
+asgiref==3.2.5            # via django
 beautifulsoup4==4.8.2     # via django-bootstrap4
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
-click==7.0                # via pip-tools
+click==7.1.1              # via pip-tools
 django-bootstrap4==1.1.1  # via -r requirements.in
 django-constance[database]==2.6.0  # via -r requirements.in
 django-octicons==1.0.2    # via -r requirements.in
@@ -18,7 +18,7 @@ django==3.0.4             # via -r requirements.in, django-octicons, django-pick
 idna==2.9                 # via requests
 mysqlclient==1.4.6        # via -r requirements.in
 pip-tools==4.5.1          # via -r requirements.in
-pygments==2.5.2           # via -r requirements.in
+pygments==2.6.1           # via -r requirements.in
 python-dotenv==0.12.0     # via -r requirements.in
 pytz==2019.3              # via django
 requests==2.23.0          # via -r requirements.in
