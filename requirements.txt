@@ -14,7 +14,7 @@ django-constance[database]==2.6.0  # via -r requirements.in
 django-octicons==1.0.2    # via -r requirements.in
 django-picklefield==2.1.1  # via django-constance
 django-shapeshifter==18.9.23  # via -r requirements.in
-django==3.0.6             # via -r requirements.in, django-bootstrap4, django-octicons, django-picklefield
+django==3.0.7             # via -r requirements.in, django-bootstrap4, django-octicons, django-picklefield
 idna==2.9                 # via requests
 mysqlclient==1.4.6        # via -r requirements.in
 pip-tools==5.2.0          # via -r requirements.in
