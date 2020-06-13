@@ -36,8 +36,8 @@
                 >
                     <div class="form-row">
                         <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
-                             :class="{'text-danger': dates[idx].weekday > 5}">
-                            [[ dates[idx].toFormat('dd/MM') ]]
+                             :class="{'text-danger': dates[idx].weekday > 5, 'text-primary': dates[idx].weekday == 4}">
+                            [[ dates[idx].toFormat('EEE dd/MM') ]]
                         </div>
                         <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
                         <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
