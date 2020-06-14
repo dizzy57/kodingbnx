@@ -13,8 +13,15 @@ Every user has access to a submissions page where they can publish their solutio
 An admin can prepare a list of tasks for students. One task per day :)
 
 ## How to build and run
+`docker-compose up`
 
-`TBD`
+Create Django super user
+
+`docker-compose run web sh`
+
+`/venv/bin/python manage.py createsuperuser`
+
+Access the site on http://localhost:8000/, log in using the super user credentials created earlier.
 
 ## Contribution guides
 
