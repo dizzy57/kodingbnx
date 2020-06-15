@@ -23,6 +23,11 @@ Create Django super user
 
 Access the site on http://localhost:8000/, log in using the super user credentials created earlier.
 
+### Note for Docker Toolbox users on Windows
+You might need to setup port forwarding, see https://stackoverflow.com/a/45822356/76176.
+Also, mounting might not work if the project is outside of Users folder. Move it there or try https://headsigned.com/posts/mounting-docker-volumes-with-docker-toolbox-for-windows/.
+
+
 ## Contribution guides
 
 `TBD`
