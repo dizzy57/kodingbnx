@@ -1,11 +1,12 @@
 import datetime
 from collections import defaultdict
 
+from constance import config
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Max, Q
 from django.http import Http404
-from django.urls import reverse_lazy
+from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -16,9 +17,16 @@ from coding_tasks.models import Solution, Task
 from telegram_bot.telegram_api import TelegramBot
 
 
+def can_disclose_solutions_for_user(user: User):
+    can_disclose_based_on_time = task_schedule.can_disclose_solutions()
+    user_has_solution_today = config.ALLOW_SOLUTIONS_EARLY and bool(
+        user.solution_set.filter(task__date=task_schedule.today())
+    )
+    return can_disclose_based_on_time or user_has_solution_today
+
+
 class SubmitView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/submit.html"
-    success_url = reverse_lazy("solutions_week")
     model = Solution
     fields = ["code", "language"]
 
@@ -57,6 +65,13 @@ class SubmitView(LoginRequiredMixin, UpdateView):
                 bot.notify_additional_solution(self.object)
         return res
 
+    def get_success_url(self):
+        if config.ALLOW_SOLUTIONS_EARLY:
+            today = task_schedule.today()
+            return reverse("solutions_day", args=[today])
+        else:
+            return reverse("solutions_week")
+
 
 class SolutionsWeekView(LoginRequiredMixin, TemplateView):
     template_name = "coding_tasks/solutions_week.html"
@@ -87,7 +102,7 @@ class SolutionsWeekView(LoginRequiredMixin, TemplateView):
         users_and_solved_dates.sort(key=lambda x: x[0].get_short_name())
         context["users_and_solved_dates"] = users_and_solved_dates
 
-        can_disclose_solutions = task_schedule.can_disclose_solutions()
+        can_disclose_solutions = can_disclose_solutions_for_user(self.request.user)
         context["can_disclose_solutions"] = can_disclose_solutions
 
         users_without_recent_solutions = list(
@@ -134,7 +149,7 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         today = task_schedule.today()
-        can_disclose_solutions = task_schedule.can_disclose_solutions()
+        can_disclose_solutions = can_disclose_solutions_for_user(self.request.user)
         date = self.kwargs["date"]
         if date > today or (date == today and not can_disclose_solutions):
             raise Http404("Should not disclose tasks or solutions too early")
