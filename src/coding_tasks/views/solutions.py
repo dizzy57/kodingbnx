@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Max, Q
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, TemplateView, UpdateView
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -27,6 +27,7 @@ def can_disclose_solutions_for_user(user: User):
 
 class SubmitView(LoginRequiredMixin, UpdateView):
     template_name = "coding_tasks/submit.html"
+    success_url = reverse_lazy("solutions_week")
     model = Solution
     fields = ["code", "language"]
 
@@ -64,13 +65,6 @@ class SubmitView(LoginRequiredMixin, UpdateView):
             with TelegramBot() as bot:
                 bot.notify_additional_solution(self.object)
         return res
-
-    def get_success_url(self):
-        if config.ALLOW_SOLUTIONS_EARLY:
-            today = task_schedule.today()
-            return reverse("solutions_day", args=[today])
-        else:
-            return reverse("solutions_week")
 
 
 class SolutionsWeekView(LoginRequiredMixin, TemplateView):
