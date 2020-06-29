@@ -58,8 +58,11 @@
             <ul class="list-group">
                 <li class="list-group-item" v-for="(suggestion, idx) in suggestions" :key="suggestion.id">
                     <div class="form-row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <a :href="[[ suggestion.url ]]" target="_blank">[[ suggestion.url ]]</a>
+                        </div>
+                        <div class="col-sm-2">
+                            [[ suggestion.user ]]
                         </div>
                         <div class="col-sm-2">
                             <button type="button" class="close col-6" @click="remove_suggestion(idx)">

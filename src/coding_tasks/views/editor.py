@@ -50,9 +50,10 @@ class EditTasksView(StaffuserRequiredMixin, TemplateView):
             for idx, date in enumerate(dates)
         ]
 
-        suggestions = list(
-            Suggestion.objects.values("id", "url").order_by("-submitted_at")
-        )
+        suggestions = [
+            {'id': suggestion.id, 'url': suggestion.url, 'user': suggestion.user.get_short_name()}
+            for suggestion in Suggestion.objects.order_by("-submitted_at")
+        ]
 
         editor_data["next_id"] = len(tasks)
         editor_data["tasks"] = tasks
