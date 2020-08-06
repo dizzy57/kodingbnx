@@ -81,10 +81,6 @@ CONSTANCE_CONFIG = {
     "ENABLE_SIGN_UP": (False, "Enable sign up button on login page"),
     "WARN_NO_TASK": (True, "Warn if there's no task planned for today or tomorrow"),
     "DAILY_MESSAGE": ("", "Custom message to append to the daily announce"),
-    "ALLOW_SOLUTIONS_EARLY": (
-        False,
-        "Allow users who solved today's task to see other's solutions",
-    ),
 }
 
 LANGUAGE_CODE = "en-us"
