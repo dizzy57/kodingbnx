@@ -7,17 +7,22 @@
 {% block additional_js %}
     {% if debug %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"
-                integrity="sha256-NSuqgY2hCZJUN6hDMFfdxvkexI7+iLxXQbL540RQ/c4=" crossorigin="anonymous"></script>
+                integrity="sha512-PyKhbAWS+VlTWXjk/36s5hJmUJBxcGY/1hlxg6woHD/EONP2fawZRKmvHdTGOWPKTqk3CPSUPh7+2boIBklbvw=="
+                crossorigin="anonymous"></script>
     {% else %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"
-                integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>
+                integrity="sha512-QJsj3afWlCpnQ60XzzYE8Jb3IgHIK1BcGZox9rUSmRRq3Ocz9vQ1yR80eX2/b9jfx/UuT5zYWNdrM8Te/eCMhQ=="
+                crossorigin="anonymous"></script>
     {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"
-            integrity="sha256-8Ww0c1qKDMdHT2+3s3369kzSXcgIrvqzSwzjdZ5qHDs=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"
-            integrity="sha256-GAVdfR/7cRNqncNsUBZSbgGaHPgQ5yhi9FMjm+3AJTw=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@1.24.1/build/global/luxon.min.js"
-            integrity="sha256-5FiU7kNb/UJWqMesUFnKv4dJzLMiTWljH0ONkz+h704=" crossorigin="anonymous"></script>
+            integrity="sha512-ELgdXEUQM5x+vB2mycmnSCsiDZWQYXKwlzh9+p+Hff4f5LA+uf0w2pOp3j7UAuSAajxfEzmYZNOOLQuiotrt9Q=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.0/vuedraggable.umd.min.js"
+            integrity="sha512-80M6zRjimQd08sgMQUuTtSeVEbzUgC6MQWo1AjujxM3h9krxbpe3R+YvQhvXPzeKeXbartIflW1Z1p9EkvddZQ=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.24.1/luxon.min.js"
+            integrity="sha512-IdHIbxMZbKEa2OSI0CcqlrgENti38ygeddwz6wOwjzSWygIYeJvHkvU1EFBCT1L471JM2QX36y8exP2QhgcB3A=="
+            crossorigin="anonymous"></script>
     {{ editor_data|json_script:"editor-data" }}
     <script type="text/x-template" id="editor-template">
         <div id="app">
