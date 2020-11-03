@@ -43,6 +43,12 @@ class TelegramApi:
         }
         return self._call("pinChatMessage", data)
 
+    def unpin_messages(self):
+        data = {
+            "chat_id": CHAT_ID,
+        }
+        return self._call("unpinChatMessage", data)
+
 
 class TelegramBot:
     def __init__(self):
@@ -69,6 +75,7 @@ class TelegramBot:
             message_lines.append("\n" + config.DAILY_MESSAGE)
 
         m = self.api.send_message("\n".join(message_lines))
+        self.api.unpin_messages()
         self.api.pin_message(m["result"]["message_id"])
 
     def send_solutions_for_today(self):
