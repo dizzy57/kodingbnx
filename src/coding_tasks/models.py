@@ -19,7 +19,8 @@ class Solution(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["user", "task"], name="one_solution_per_user",
+                fields=["user", "task"],
+                name="one_solution_per_user",
             ),
         ]
 

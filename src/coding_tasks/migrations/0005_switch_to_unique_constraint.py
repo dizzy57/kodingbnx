@@ -7,7 +7,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(name="solution", unique_together=set(),),
+        migrations.AlterUniqueTogether(
+            name="solution",
+            unique_together=set(),
+        ),
         migrations.AddConstraint(
             model_name="solution",
             constraint=models.UniqueConstraint(
