@@ -4,17 +4,17 @@
 #
 #    pip-compile
 #
-asgiref==3.3.1
+asgiref==3.3.4
     # via django
 beautifulsoup4==4.9.3
     # via django-bootstrap4
-certifi==2020.12.5
+certifi==2021.5.30
     # via requests
 chardet==4.0.0
     # via requests
-click==7.1.2
+click==8.0.1
     # via pip-tools
-django-bootstrap4==2.3.1
+django-bootstrap4==3.0.1
     # via -r requirements.in
 django-constance[database]==2.8.0
     # via -r requirements.in
@@ -24,7 +24,7 @@ django-picklefield==3.0.1
     # via django-constance
 django-shapeshifter==18.9.23
     # via -r requirements.in
-django==3.1.7
+django==3.2.4
     # via
     #   -r requirements.in
     #   django-bootstrap4
@@ -36,11 +36,11 @@ mysqlclient==2.0.3
     # via -r requirements.in
 pep517==0.10.0
     # via pip-tools
-pip-tools==6.0.1
+pip-tools==6.1.0
     # via -r requirements.in
-pygments==2.8.1
+pygments==2.9.0
     # via -r requirements.in
-python-dotenv==0.16.0
+python-dotenv==0.17.1
     # via -r requirements.in
 pytz==2021.1
     # via django
@@ -52,7 +52,7 @@ sqlparse==0.4.1
     # via django
 toml==0.10.2
     # via pep517
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 
 # The following packages are considered to be unsafe in a requirements file:

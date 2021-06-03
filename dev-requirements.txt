@@ -4,18 +4,19 @@
 #
 #    pip-compile dev-requirements.in
 #
-asgiref==3.3.1
+asgiref==3.3.4
     # via
     #   -c requirements.txt
     #   django
-django-debug-toolbar==3.2
+django-debug-toolbar==3.2.1
     # via -r dev-requirements.in
-django-extensions==3.1.1
+django-extensions==3.1.3
     # via -r dev-requirements.in
-django==3.1.7
+django==3.2.4
     # via
     #   -c requirements.txt
     #   django-debug-toolbar
+    #   django-extensions
 pytz==2021.1
     # via
     #   -c requirements.txt
@@ -25,5 +26,5 @@ sqlparse==0.4.1
     #   -c requirements.txt
     #   django
     #   django-debug-toolbar
-werkzeug==1.0.1
+werkzeug==2.0.1
     # via -r dev-requirements.in
