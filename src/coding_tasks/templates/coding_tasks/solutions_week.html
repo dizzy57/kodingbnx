@@ -35,10 +35,10 @@
             </thead>
             <tbody>
             {% for row_user, row_user_solved_dates in users_and_solved_dates %}
-                <tr{% if row_user == user %} class="table-warning"{% endif %}>
+                <tr{% if row_user == user %} class="bg-light"{% endif %}>
                     <th scope="row">
                       {{ row_user.get_short_name }}
-                      {% if row_user_solved_dates|length == 7 %} <span style="color: yellow; margin-left: 10px;">{% octicon "star" %}</span> {% endif %}
+                      {% if row_user_solved_dates|length == 7 %} <span style="margin-left: 1ex;" class="text-warning">{% octicon "star" %}</span> {% endif %}
                     </th>
                     {% for date in all_days %}
                         <td class="text-center">
