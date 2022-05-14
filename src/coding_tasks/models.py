@@ -33,6 +33,7 @@ class Solution(models.Model):
         JAVASCRIPT = "js", "JavaScript"
         KOTLIN = "kotlin", "Kotlin"
         PYTHON = "python", "Python"
+        RACKET = "racket", "Racket"
         RUBY = "ruby", "Ruby"
         RUST = "rust", "Rust"
         SCALA = "scala", "Scala"
