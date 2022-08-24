@@ -1,4 +1,5 @@
 {% extends "coding_tasks/base.html" %}
+{% load static %}
 {% load octicons %}
 
 {% block content %}
@@ -6,22 +7,22 @@
 {% endblock %}
 {% block additional_js %}
     {% if debug %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"
-                integrity="sha512-YXLGLsQBiwHPHLCAA9npZWhADUsHECjkZ71D1uzT2Hpop82/eLnmFb6b0jo8pK4T0Au0g2FETrRJNblF/46ZzQ=="
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.js"
+                integrity="sha512-s+PN9Rg12gOk155+jtSyxHA6zVjtsWTsMIpbKVzIwaNFfl6FRsHRdP0Lr88i8cZ99+7v+ROlOTm3+1O6IZqEbQ=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% else %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.min.js"
-                integrity="sha512-BKbSR+cfyxLdMAsE0naLReFSLg8/pjbgfxHh/k/kUC82Hy7r6HtR5hLhobaln2gcTvzkyyehrdREdjpsQwy2Jw=="
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js"
+                integrity="sha512-H8u5mlZT1FD7MRlnUsODppkKyk+VEiCmncej8yZW1k/wUT90OQon0F9DSf/2Qh+7L/5UHd+xTLrMszjHEZc2BA=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endif %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"
-            integrity="sha512-5x7t0fTAVo9dpfbp3WtE2N6bfipUwk7siViWncdDoSz2KwOqVC1N9fDxEOzk0vTThOua/mglfF8NO7uVDLRC8Q=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"
+            integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.min.js"
             integrity="sha512-VyYlTbK139H2WlmJs3QVOtdp0lcAIpPgGVFZrXUOBfqJoBA9AsfAHgSDPsYCo71jtFDW9pphEOlERL4ibDnUrQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.26.0/luxon.min.js"
-            integrity="sha512-cYjGoxnM2sxryDRpKhwi8uTszEw2zufuDVz1dWlm1+wlvwnhQ4wu00BokHH4IKlogGJNL+2a2GYvHN+xaoUxjQ=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js"
+            integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{ editor_data|json_script:"editor-data" }}
     <script type="text/x-template" id="editor-template">
@@ -45,7 +46,8 @@
                             [[ dates[idx].toFormat('EEE dd/MM') ]]
                         </div>
                         <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
-                        <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"/>
+                        <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"
+                               @input="guess_name(idx)"/>
                         <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
                     </div>
                 </li>
@@ -79,6 +81,7 @@
             </ul>
         </div>
     </script>
+    <script src="{% static "coding_tasks/task_urls.js" %}"></script>
     <script>
         "use strict";
         const app = new Vue({
@@ -103,14 +106,15 @@
                 },
                 clean_or_remove_at(idx) {
                     if (this.is_valid_task(idx)) {
-                        this.tasks[idx]['name'] = '';
-                        this.tasks[idx]['url'] = '';
+                        this.tasks[idx].name = '';
+                        this.tasks[idx].url = '';
                     } else {
                         this.tasks.splice(idx, 1);
                     }
                 },
                 add_task(url = '') {
                     this.tasks.push({id: this.next_id, name: '', url: url});
+                    this.guess_name(this.next_id);
                     this.next_id = this.next_id + 1;
                 },
                 async save_tasks() {
@@ -156,6 +160,13 @@
                 remove_suggestion(idx) {
                     this.deleted_suggestions.push(this.suggestions[idx].id);
                     this.suggestions.splice(idx, 1);
+                },
+                guess_name(idx) {
+                    const url = this.tasks[idx].url;
+                    if (this.tasks[idx].name === '' && url.startsWith('https://leetcode.com/problems/')) {
+                        const name = TASK_URLS_TO_NAMES[url];
+                        if (name) this.tasks[idx].name = name;
+                    }
                 },
             },
         });
