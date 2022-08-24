@@ -1,5 +1,5 @@
 pip-tools
-django
+django<4.0
 mysqlclient
 django-bootstrap4
 requests
