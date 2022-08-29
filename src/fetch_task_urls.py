@@ -1,7 +1,7 @@
 import json
 import requests
 
-limit = 2400
+limit = 3000
 
 url = "https://leetcode.com/graphql/"
 body = {

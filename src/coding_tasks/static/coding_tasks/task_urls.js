@@ -228,7 +228,7 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/palindrome-linked-list/": "Palindrome Linked List (E)",
 "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/": "Lowest Common Ancestor of a Binary Search Tree (E)",
 "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/": "Lowest Common Ancestor of a Binary Tree (M)",
-"https://leetcode.com/problems/delete-node-in-a-linked-list/": "Delete Node in a Linked List (E)",
+"https://leetcode.com/problems/delete-node-in-a-linked-list/": "Delete Node in a Linked List (M)",
 "https://leetcode.com/problems/product-of-array-except-self/": "Product of Array Except Self (M)",
 "https://leetcode.com/problems/sliding-window-maximum/": "Sliding Window Maximum (H)",
 "https://leetcode.com/problems/search-a-2d-matrix-ii/": "Search a 2D Matrix II (M)",
@@ -1884,5 +1884,9 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/minimum-hours-of-training-to-win-a-competition/": "Minimum Hours of Training to Win a Competition (E)",
 "https://leetcode.com/problems/largest-palindromic-number/": "Largest Palindromic Number (M)",
 "https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/": "Amount of Time for Binary Tree to Be Infected (M)",
-"https://leetcode.com/problems/find-the-k-sum-of-an-array/": "Find the K-Sum of an Array (H)"
+"https://leetcode.com/problems/find-the-k-sum-of-an-array/": "Find the K-Sum of an Array (H)",
+"https://leetcode.com/problems/longest-subsequence-with-limited-sum/": "Longest Subsequence With Limited Sum (E)",
+"https://leetcode.com/problems/removing-stars-from-a-string/": "Removing Stars From a String (M)",
+"https://leetcode.com/problems/minimum-amount-of-time-to-collect-garbage/": "Minimum Amount of Time to Collect Garbage (M)",
+"https://leetcode.com/problems/build-a-matrix-with-conditions/": "Build a Matrix With Conditions (H)"
 }
