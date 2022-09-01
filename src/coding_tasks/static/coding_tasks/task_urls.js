@@ -27,7 +27,7 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/reverse-nodes-in-k-group/": "Reverse Nodes in k-Group (H)",
 "https://leetcode.com/problems/remove-duplicates-from-sorted-array/": "Remove Duplicates from Sorted Array (E)",
 "https://leetcode.com/problems/remove-element/": "Remove Element (E)",
-"https://leetcode.com/problems/implement-strstr/": "Implement strStr() (E)",
+"https://leetcode.com/problems/implement-strstr/": "Implement strStr() (M)",
 "https://leetcode.com/problems/divide-two-integers/": "Divide Two Integers (M)",
 "https://leetcode.com/problems/substring-with-concatenation-of-all-words/": "Substring with Concatenation of All Words (H)",
 "https://leetcode.com/problems/next-permutation/": "Next Permutation (M)",
