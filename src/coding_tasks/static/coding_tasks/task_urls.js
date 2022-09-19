@@ -1163,7 +1163,7 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/": "Maximum Number of Vowels in a Substring of Given Length (M)",
 "https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/": "Pseudo-Palindromic Paths in a Binary Tree (M)",
 "https://leetcode.com/problems/max-dot-product-of-two-subsequences/": "Max Dot Product of Two Subsequences (H)",
-"https://leetcode.com/problems/make-two-arrays-equal-by-reversing-sub-arrays/": "Make Two Arrays Equal by Reversing Sub-arrays (E)",
+"https://leetcode.com/problems/make-two-arrays-equal-by-reversing-subarrays/": "Make Two Arrays Equal by Reversing Subarrays (E)",
 "https://leetcode.com/problems/check-if-a-string-contains-all-binary-codes-of-size-k/": "Check If a String Contains All Binary Codes of Size K (M)",
 "https://leetcode.com/problems/course-schedule-iv/": "Course Schedule IV (M)",
 "https://leetcode.com/problems/cherry-pickup-ii/": "Cherry Pickup II (H)",
@@ -1896,5 +1896,17 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/check-distances-between-same-letters/": "Check Distances Between Same Letters (E)",
 "https://leetcode.com/problems/number-of-ways-to-reach-a-position-after-exactly-k-steps/": "Number of Ways to Reach a Position After Exactly k Steps (M)",
 "https://leetcode.com/problems/longest-nice-subarray/": "Longest Nice Subarray (M)",
-"https://leetcode.com/problems/meeting-rooms-iii/": "Meeting Rooms III (H)"
+"https://leetcode.com/problems/meeting-rooms-iii/": "Meeting Rooms III (H)",
+"https://leetcode.com/problems/most-frequent-even-element/": "Most Frequent Even Element (E)",
+"https://leetcode.com/problems/optimal-partition-of-string/": "Optimal Partition of String (M)",
+"https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/": "Divide Intervals Into Minimum Number of Groups (M)",
+"https://leetcode.com/problems/longest-increasing-subsequence-ii/": "Longest Increasing Subsequence II (H)",
+"https://leetcode.com/problems/count-days-spent-together/": "Count Days Spent Together (E)",
+"https://leetcode.com/problems/maximum-matching-of-players-with-trainers/": "Maximum Matching of Players With Trainers (M)",
+"https://leetcode.com/problems/smallest-subarrays-with-maximum-bitwise-or/": "Smallest Subarrays With Maximum Bitwise OR (M)",
+"https://leetcode.com/problems/minimum-money-required-before-transactions/": "Minimum Money Required Before Transactions (H)",
+"https://leetcode.com/problems/smallest-even-multiple/": "Smallest Even Multiple (E)",
+"https://leetcode.com/problems/length-of-the-longest-alphabetical-continuous-substring/": "Length of the Longest Alphabetical Continuous Substring (M)",
+"https://leetcode.com/problems/reverse-odd-levels-of-binary-tree/": "Reverse Odd Levels of Binary Tree (M)",
+"https://leetcode.com/problems/sum-of-prefix-scores-of-strings/": "Sum of Prefix Scores of Strings (H)"
 }
