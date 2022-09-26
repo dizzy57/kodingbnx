@@ -1406,7 +1406,7 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/tree-of-coprimes/": "Tree of Coprimes (H)",
 "https://leetcode.com/problems/merge-strings-alternately/": "Merge Strings Alternately (E)",
 "https://leetcode.com/problems/minimum-number-of-operations-to-move-all-balls-to-each-box/": "Minimum Number of Operations to Move All Balls to Each Box (M)",
-"https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/": "Maximum Score from Performing Multiplication Operations (M)",
+"https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/": "Maximum Score from Performing Multiplication Operations (H)",
 "https://leetcode.com/problems/maximize-palindrome-length-from-subsequences/": "Maximize Palindrome Length From Subsequences (H)",
 "https://leetcode.com/problems/count-items-matching-a-rule/": "Count Items Matching a Rule (E)",
 "https://leetcode.com/problems/closest-dessert-cost/": "Closest Dessert Cost (M)",
@@ -1908,5 +1908,9 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/smallest-even-multiple/": "Smallest Even Multiple (E)",
 "https://leetcode.com/problems/length-of-the-longest-alphabetical-continuous-substring/": "Length of the Longest Alphabetical Continuous Substring (M)",
 "https://leetcode.com/problems/reverse-odd-levels-of-binary-tree/": "Reverse Odd Levels of Binary Tree (M)",
-"https://leetcode.com/problems/sum-of-prefix-scores-of-strings/": "Sum of Prefix Scores of Strings (H)"
+"https://leetcode.com/problems/sum-of-prefix-scores-of-strings/": "Sum of Prefix Scores of Strings (H)",
+"https://leetcode.com/problems/sort-the-people/": "Sort the People (E)",
+"https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/": "Longest Subarray With Maximum Bitwise AND (M)",
+"https://leetcode.com/problems/find-all-good-indices/": "Find All Good Indices (M)",
+"https://leetcode.com/problems/number-of-good-paths/": "Number of Good Paths (H)"
 }
