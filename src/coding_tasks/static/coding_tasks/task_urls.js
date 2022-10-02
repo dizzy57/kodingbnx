@@ -1912,5 +1912,13 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/sort-the-people/": "Sort the People (E)",
 "https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/": "Longest Subarray With Maximum Bitwise AND (M)",
 "https://leetcode.com/problems/find-all-good-indices/": "Find All Good Indices (M)",
-"https://leetcode.com/problems/number-of-good-paths/": "Number of Good Paths (H)"
+"https://leetcode.com/problems/number-of-good-paths/": "Number of Good Paths (H)",
+"https://leetcode.com/problems/remove-letter-to-equalize-frequency/": "Remove Letter To Equalize Frequency (E)",
+"https://leetcode.com/problems/longest-uploaded-prefix/": "Longest Uploaded Prefix (M)",
+"https://leetcode.com/problems/bitwise-xor-of-all-pairings/": "Bitwise XOR of All Pairings (M)",
+"https://leetcode.com/problems/number-of-pairs-satisfying-inequality/": "Number of Pairs Satisfying Inequality (H)",
+"https://leetcode.com/problems/number-of-common-factors/": "Number of Common Factors (E)",
+"https://leetcode.com/problems/maximum-sum-of-an-hourglass/": "Maximum Sum of an Hourglass (M)",
+"https://leetcode.com/problems/minimize-xor/": "Minimize XOR (M)",
+"https://leetcode.com/problems/maximum-deletions-on-a-string/": "Maximum Deletions on a String (H)"
 }
