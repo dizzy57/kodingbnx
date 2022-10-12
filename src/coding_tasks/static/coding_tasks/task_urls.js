@@ -1920,5 +1920,9 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/number-of-common-factors/": "Number of Common Factors (E)",
 "https://leetcode.com/problems/maximum-sum-of-an-hourglass/": "Maximum Sum of an Hourglass (M)",
 "https://leetcode.com/problems/minimize-xor/": "Minimize XOR (M)",
-"https://leetcode.com/problems/maximum-deletions-on-a-string/": "Maximum Deletions on a String (H)"
+"https://leetcode.com/problems/maximum-deletions-on-a-string/": "Maximum Deletions on a String (H)",
+"https://leetcode.com/problems/the-employee-that-worked-on-the-longest-task/": "The Employee That Worked on the Longest Task (E)",
+"https://leetcode.com/problems/find-the-original-array-of-prefix-xor/": "Find The Original Array of Prefix Xor (M)",
+"https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/": "Using a Robot to Print the Lexicographically Smallest String (M)",
+"https://leetcode.com/problems/paths-in-matrix-whose-sum-is-divisible-by-k/": "Paths in Matrix Whose Sum Is Divisible by K (H)"
 }
