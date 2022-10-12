@@ -1,6 +1,12 @@
 {% extends "coding_tasks/base.html" %}
+{% load octicons %}
+
 {% block additional_head %}
     <style>
+        .octicon {
+            fill: currentColor;
+        }
+
         .highlight {
             padding: .5em;
         }
@@ -10,7 +16,13 @@
 {% endblock %}
 
 {% block content %}
-    <h2><a href="{{ task.url }}" target="_blank" data-instant>{{ task.name }}</a></h2>
+    <div class="d-flex justify-content-between">
+        <h2><a href="{{ task.url }}" target="_blank" data-instant>{{ task.name }}</a></h2>
+        <ul class="pagination">
+            <li class="page-item{% if not prev_url %} disabled{% endif %}"><a class="page-link" href="{{ prev_url|default:'#' }}">{% octicon "chevron-left" height="24" %}</a></li>
+            <li class="page-item{% if not next_url %} disabled{% endif %}"><a class="page-link" href="{{ next_url|default:'#' }}">{% octicon "chevron-right" height="24" %}</a></li>
+        </ul>
+    </div>
     {% for solution, formatted_solution in solution_and_formatted %}
         <h3 id="u{{ solution.user.id }}">
             {{ solution.user.get_short_name }}

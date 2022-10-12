@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Max, Q
 from django.http import Http404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -158,5 +158,24 @@ class SolutionsDayView(LoginRequiredMixin, DetailView):
             formatted_solution = highlight(solution.code, lexer, formatter)
             solution_and_formatted.append((solution, formatted_solution))
         context["solution_and_formatted"] = solution_and_formatted
+
+        prev_task = (
+            Task.objects.filter(url=task.url, date__lt=task.date)
+            .order_by("-date")
+            .first()
+        )
+        next_task = (
+            Task.objects.filter(url=task.url, date__gt=task.date)
+            .order_by("date")
+            .first()
+        )
+        if prev_task is not None:
+            context["prev_url"] = reverse(
+                "solutions_day", kwargs={"date": prev_task.date}
+            )
+        if next_task is not None:
+            context["next_url"] = reverse(
+                "solutions_day", kwargs={"date": next_task.date}
+            )
 
         return context

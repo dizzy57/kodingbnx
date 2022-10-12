@@ -7,6 +7,11 @@ from django.dispatch import receiver
 
 
 class Task(models.Model):
+    class Meta:
+        indexes = [
+            models.Index(fields=["url", "date"]),
+        ]
+
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=255)
     date = models.DateField(unique=True)
