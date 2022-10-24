@@ -1924,5 +1924,17 @@ const TASK_URLS_TO_NAMES = {
 "https://leetcode.com/problems/the-employee-that-worked-on-the-longest-task/": "The Employee That Worked on the Longest Task (E)",
 "https://leetcode.com/problems/find-the-original-array-of-prefix-xor/": "Find The Original Array of Prefix Xor (M)",
 "https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/": "Using a Robot to Print the Lexicographically Smallest String (M)",
-"https://leetcode.com/problems/paths-in-matrix-whose-sum-is-divisible-by-k/": "Paths in Matrix Whose Sum Is Divisible by K (H)"
+"https://leetcode.com/problems/paths-in-matrix-whose-sum-is-divisible-by-k/": "Paths in Matrix Whose Sum Is Divisible by K (H)",
+"https://leetcode.com/problems/number-of-valid-clock-times/": "Number of Valid Clock Times (E)",
+"https://leetcode.com/problems/range-product-queries-of-powers/": "Range Product Queries of Powers (M)",
+"https://leetcode.com/problems/minimize-maximum-of-array/": "Minimize Maximum of Array (M)",
+"https://leetcode.com/problems/create-components-with-same-value/": "Create Components With Same Value (H)",
+"https://leetcode.com/problems/largest-positive-integer-that-exists-with-its-negative/": "Largest Positive Integer That Exists With Its Negative (E)",
+"https://leetcode.com/problems/count-number-of-distinct-integers-after-reverse-operations/": "Count Number of Distinct Integers After Reverse Operations (M)",
+"https://leetcode.com/problems/sum-of-number-and-its-reverse/": "Sum of Number and Its Reverse (M)",
+"https://leetcode.com/problems/count-subarrays-with-fixed-bounds/": "Count Subarrays With Fixed Bounds (H)",
+"https://leetcode.com/problems/determine-if-two-events-have-conflict/": "Determine if Two Events Have Conflict (E)",
+"https://leetcode.com/problems/number-of-subarrays-with-gcd-equal-to-k/": "Number of Subarrays With GCD Equal to K (M)",
+"https://leetcode.com/problems/minimum-cost-to-make-array-equal/": "Minimum Cost to Make Array Equal (H)",
+"https://leetcode.com/problems/minimum-number-of-operations-to-make-arrays-similar/": "Minimum Number of Operations to Make Arrays Similar (H)"
 }
