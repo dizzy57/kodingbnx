@@ -10,7 +10,7 @@ beautifulsoup4==4.11.1
     # via django-bootstrap4
 build==0.8.0
     # via pip-tools
-certifi==2022.6.15
+certifi==2022.12.7
     # via requests
 charset-normalizer==2.1.1
     # via requests
@@ -56,10 +56,6 @@ soupsieve==2.3.2.post1
     # via beautifulsoup4
 sqlparse==0.4.2
     # via django
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
 urllib3==1.26.12
     # via requests
 wheel==0.37.1
