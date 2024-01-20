@@ -38,7 +38,10 @@
                         class="list-group-item"
                         v-for="(task, idx) in tasks"
                         :key="task.id"
-                        :class="{'list-group-item-secondary': !is_valid_task(idx)}"
+                        :class="{
+                            'list-group-item-secondary': !is_valid_task(idx),
+                            'list-group-item-danger': task.name.includes('=====END OF BACKLOG====='),
+                        }"
                 >
                     <div class="form-row">
                         <div class="handle col-sm-1 col-form-label text-center" style="cursor: move"
@@ -48,7 +51,10 @@
                         <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
                         <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"
                                @input="process_name(idx)"/>
-                        <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
+                        <div class="buttons col-sm-1">
+                            <button type="button" class="close" @click="clean_or_remove_at(idx)">&times;</button>
+                            <button type="button" class="btn" @click="to_backlog(idx)">{% octicon "arrow-up" height="24" %}</button>
+                        </div>
                     </div>
                 </li>
             </draggable>
@@ -103,6 +109,37 @@
                 is_valid_task(idx) {
                     const task = this.tasks[idx];
                     return task.name.length !== 0 && task.url.length !== 0;
+                },
+                to_backlog(idx) {
+                    let backlog_marker_idx = -1;
+                    for (let i = 0; i < this.tasks.length; i++) {
+                        if (this.tasks[i].name === '=====END OF BACKLOG=====') {
+                            backlog_marker_idx = i;
+                            break;
+                        }
+                    }
+                    if (backlog_marker_idx === -1) {
+                        this.tasks.push({id: this.next_id, name: '=====END OF BACKLOG=====', url: 'https://blah.com'});
+                        backlog_marker_idx = this.tasks.length - 1;
+                        this.next_id = this.next_id + 1;
+                    }
+                    
+                    if (idx < backlog_marker_idx || idx === backlog_marker_idx) {
+                        return;
+                    }
+
+                    let end_of_backlog_idx = backlog_marker_idx - 1;
+                    if (end_of_backlog_idx < 0) {
+                        return;
+                    }
+
+                    if (this.tasks[end_of_backlog_idx].url !== '') {
+                        end_of_backlog_idx = backlog_marker_idx;
+                    }
+
+                    let task = this.tasks[idx];
+                    this.tasks.splice(idx, 1);
+                    this.tasks.splice(end_of_backlog_idx, 0, task);
                 },
                 clean_or_remove_at(idx) {
                     if (this.is_valid_task(idx)) {
