@@ -12,7 +12,7 @@ from coding_tasks.forms import (
     UserUpdateForm,
 )
 from coding_tasks.models import Suggestion
-from coding_tasks.utils import strip_description_path # Import the helper function
+from coding_tasks.utils import strip_description_path
 
 
 class UserUpdateView(LoginRequiredMixin, MultiModelFormView):
@@ -36,7 +36,7 @@ class SuggestionAddView(LoginRequiredMixin, RedirectView):
         form = SuggestionAddForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data["url"]
-            url = strip_description_path(url) # Call the helper function to sanitise the url
+            url = strip_description_path(url)
             Suggestion.objects.update_or_create(
                 url=url, defaults={"user": request.user}
             )
