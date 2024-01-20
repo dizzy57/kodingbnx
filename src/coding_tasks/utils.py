@@ -10,6 +10,6 @@ def strip_description_path(url):
         str: The url without the suffix.
     """
     if url.startswith("https://leetcode.com/problems/"):
-        return re.sub(r"/(description|submissions)/?$", "", url)
+        return re.sub(r"/(description|submissions)/?$", "/", url)
     else:
         return url

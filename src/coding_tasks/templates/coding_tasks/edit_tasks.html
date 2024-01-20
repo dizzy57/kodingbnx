@@ -47,7 +47,7 @@
                         </div>
                         <input type="text" class="form-control col-sm-5" placeholder="Name" v-model="task.name"/>
                         <input type="url" class="form-control col-sm-5" placeholder="URL" v-model="task.url"
-                               @input="guess_name(idx)"/>
+                               @input="process_name(idx)"/>
                         <button type="button" class="close col-sm-1" @click="clean_or_remove_at(idx)">&times;</button>
                     </div>
                 </li>
@@ -114,7 +114,7 @@
                 },
                 add_task(url = '') {
                     this.tasks.push({id: this.next_id, name: '', url: url});
-                    this.guess_name(this.next_id);
+                    this.process_name(this.next_id);
                     this.next_id = this.next_id + 1;
                 },
                 async save_tasks() {
@@ -161,11 +161,21 @@
                     this.deleted_suggestions.push(this.suggestions[idx].id);
                     this.suggestions.splice(idx, 1);
                 },
-                guess_name(idx) {
+                process_name(idx) {
                     const url = this.tasks[idx].url;
-                    if (this.tasks[idx].name === '' && url.startsWith('https://leetcode.com/problems/')) {
-                        const name = TASK_URLS_TO_NAMES[url];
-                        if (name) this.tasks[idx].name = name;
+                    if (url.startsWith('https://leetcode.com/problems/')) {
+                        let sanitized_url = url;
+                        if (sanitized_url.includes('/description/') || url.includes('/submissions/')) {
+                            sanitized_url = url.replace('/description/', '/').replace('/submissions/', '/');
+                        }
+                        if (!sanitized_url.endsWith('/')) {
+                            sanitized_url += '/';
+                        }
+                        this.tasks[idx].url = sanitized_url;
+                        if (this.tasks[idx].name === '') {
+                            const name = TASK_URLS_TO_NAMES[sanitized_url];
+                            if (name) this.tasks[idx].name = name;
+                        }
                     }
                 },
             },
