@@ -14,7 +14,7 @@ CHAT_ID = int(os.environ["TELEGRAM_CHAT_ID"])
 URL_BASE = f"https://api.telegram.org/bot{BOT_API_KEY}/"
 
 SITE_URL = "https://kodingbnx.pythonanywhere.com"
-STAFF_USERS = "@van_peterhof"
+STAFF_USERS = "@grambbledook"
 NO_TASK_FOR_TODAY_MESSAGE = f"{STAFF_USERS} No task for today :("
 NO_TASK_FOR_TOMORROW_MESSAGE = f"{STAFF_USERS} No task for tomorrow"
 
